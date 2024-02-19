@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class AppUser {
+public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
@@ -30,7 +30,5 @@ public class AppUser {
     private String profileImage;
     private String description;
     private String serviceType;
-
-
 
 }
