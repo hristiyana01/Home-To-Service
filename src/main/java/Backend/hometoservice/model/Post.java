@@ -1,4 +1,4 @@
-package com.example.hometoservice.model;
+package Backend.hometoservice.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

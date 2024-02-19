@@ -1,4 +1,4 @@
-package com.example.hometoservice.model;
+package Backend.hometoservice.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,13 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+@NoArgsConstructor
+@Data
+public class Favourites {
     @Id
     private Integer id;
-    private String name;
-    private String description;
-
+    private Integer appUserId;
+    private Integer postId;
+    private String favouriteDate;
 }
