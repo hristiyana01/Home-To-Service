@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Review {
+public class Reviews {
     @Id
     private Integer id;
     private Integer rating;
