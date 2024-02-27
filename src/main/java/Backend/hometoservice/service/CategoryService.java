@@ -1,11 +1,12 @@
 package Backend.hometoservice.service;
 
+import Backend.hometoservice.dto.CategoryDto;
+import Backend.hometoservice.model.Category;
 import Backend.hometoservice.repository.CategoryRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryService {
-   // private final CategoryRepository categoryRepository;
-    public void addCategory() {
-    }
+public interface CategoryService {
+    Category addCategory(CategoryDto categoryDto);
 }
