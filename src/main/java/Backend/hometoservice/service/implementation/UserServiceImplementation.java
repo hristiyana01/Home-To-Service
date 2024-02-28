@@ -17,6 +17,7 @@ public class UserServiceImplementation implements UserService {
         User user = User.builder()
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
+                .phone(userDto.getPhone())
                 .build();
         userRepository.save(user);
         return user;

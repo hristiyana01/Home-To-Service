@@ -38,7 +38,7 @@ public class User {
     private String city;
     @Column(name = "country")
     private String country;
-    private String profileImage;
+   // private String profileImage;
    // private String aboutMe;
     @Column(name = "description")
     private String description;
