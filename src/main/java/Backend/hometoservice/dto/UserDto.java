@@ -10,8 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    private String username;
-    private String password;
     private String email;
+    private String username;
+    private String surname;
+    private String password;
+    private Integer userRoleId;
     private String phone;
+    private String address;
+    private String country;
+    private String city;
+    private String zip;
 }

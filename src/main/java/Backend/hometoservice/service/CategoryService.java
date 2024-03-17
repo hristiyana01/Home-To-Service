@@ -6,7 +6,6 @@ import Backend.hometoservice.repository.CategoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface CategoryService {
     Category addCategory(CategoryDto categoryDto);
 }

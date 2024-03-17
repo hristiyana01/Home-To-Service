@@ -7,17 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Builder
-@Entity
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "categories")
-public class Category {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+@Data
+@Entity
+@Table(name = "user_roles")
+public class UserRole {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "description")
-    private String description;
 }

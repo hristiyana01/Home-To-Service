@@ -7,10 +7,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -24,4 +24,25 @@ public class UsersController {
      //   return ResponseEntity.ok().body(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
+
+//    @PutMapping("/update-email/{id}")
+//    public ResponseEntity<User> updateUserEmail(@PathVariable Integer id, @RequestParam String email) {
+//        var updateUser = userService.updateUserEmail(id, email);
+//        return ResponseEntity.ok().body(updateUser);
+//    }
+    @PutMapping("/update-data/{id}")
+    public ResponseEntity<User> updateUserData(@PathVariable Integer id, @RequestBody UserDto userDto) {
+        var updateUser = userService.updateUserData(id, userDto);
+        return ResponseEntity.ok().body(updateUser);
+    }
+    @GetMapping("/get/{id}")
+    public Optional<User> getUserById(@PathVariable Integer id) {
+        return userService.getUserById(id);
+    }
+    @GetMapping("/getAll")
+    public ResponseEntity<List<User>> getAllUsers() {
+        var users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
 }

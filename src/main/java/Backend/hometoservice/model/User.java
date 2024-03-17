@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.relational.core.sql.In;
 
+import java.time.Instant;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,11 +42,14 @@ public class User {
     private String country;
    // private String profileImage;
    // private String aboutMe;
-    @Column(name = "description")
-    private String description;
-    private String serviceType;
+//    @Column(name = "description")
+//    private String description;
     @Column(name = "state")
     private String state;
     @Column(name = "zip")
     private String zip;
+    @Column(name = "updated_date")
+    private Instant updatedDate;
+    @Column(name = "registeredDate")
+    private Instant registeredDate;
 }

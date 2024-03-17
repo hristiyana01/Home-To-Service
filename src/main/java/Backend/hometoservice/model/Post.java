@@ -1,31 +1,38 @@
 package Backend.hometoservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "posts")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(name = "title")
     private String title;
-    private String content;
-    private String image;
-    private String date;
-    private String time;
+    @Column(name = "location")
     private String location;
+    @Column(name = "category_id")
     private Integer categoryId;
+    @Column(name = "status")
     private String status;
-    private String appUser; // This is the email of the user who created the post
-    private String provider; // This is the email of the provider who accepted the post
+    @Column(name = "description")
+    private String description;
+    @Column(name = "created_date")
+    private Instant createdDate;
+    @Column(name = "creator")
+    private Integer user_creator;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
 }
