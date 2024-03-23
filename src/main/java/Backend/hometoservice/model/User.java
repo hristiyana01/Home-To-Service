@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.relational.core.sql.In;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,7 +60,7 @@ public class User {
     private Instant registeredDate;
     @OneToMany(mappedBy = "user")
     @JsonBackReference
-    private Set<Favourites> favourites = new HashSet<>();
+    private List<Favourites> favourites = new ArrayList<>();
     @OneToMany(mappedBy = "user")
     @JsonBackReference
     private List<Post> posts;

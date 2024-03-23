@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "favourites")
+@Table(name = "favourites", uniqueConstraints= @UniqueConstraint(columnNames={"active_band_user", "active_band_date"}))
 public class    Favourites {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +30,11 @@ public class    Favourites {
     private Instant favoriteDate = Instant.now();
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonManagedReference
     @JoinColumn(name = "user_id", nullable = false, insertable=false, updatable=false)
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonManagedReference
     @JoinColumn(name = "post_id", nullable = false, insertable=false, updatable=false)
     private Post post;

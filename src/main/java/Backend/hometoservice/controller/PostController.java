@@ -1,6 +1,7 @@
 package Backend.hometoservice.controller;
 
 import Backend.hometoservice.dto.CreatePostDto;
+import Backend.hometoservice.model.Favourites;
 import Backend.hometoservice.model.Post;
 import Backend.hometoservice.service.PostService;
 import lombok.AllArgsConstructor;
@@ -22,16 +23,17 @@ public class PostController {
         Post post = postService.createPost(createPostDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
-    @GetMapping("/user-posts/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<Post>> getUserPosts(@PathVariable Integer userId) {
         List<Post> posts = postService.getUserPosts(userId);
         return ResponseEntity.ok(posts);
     }
-    @GetMapping("/user-favorite-posts/{userId}")
-    public ResponseEntity<Post> getUserFavoritePosts(@RequestBody CreatePostDto createPostDto) {
-        Post post = postService.createPost(createPostDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(post);
+    @GetMapping("/user-favorites/{userId}")
+    public ResponseEntity<List<Post>> getUserFavoritePosts(@PathVariable Integer userId) {
+        List<Post> favoritePosts = postService.getUserFavoritePosts(userId);
+        return ResponseEntity.ok(favoritePosts);
     }
+
 
 //    @PutMapping("/add-photos")
 //deleting -. inactive/active
