@@ -1,5 +1,6 @@
 package Backend.hometoservice.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,15 +17,25 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 @Table(name = "favourites")
-public class Favourites {
+public class    Favourites {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "appUserId")
-    private Integer appUserId;
+    @Column(name = "user_id")
+    private Integer userId;
+    @Column(name = "post_id")
+    private Integer postId;
     @Builder.Default
     @Column(name = "favouriteDate")
     private Instant favoriteDate = Instant.now();
-    @Column(name = "post_id")
-    private Integer postId;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JoinColumn(name = "user_id", nullable = false, insertable=false, updatable=false)
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JoinColumn(name = "post_id", nullable = false, insertable=false, updatable=false)
+    private Post post;
 }

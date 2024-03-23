@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,9 +24,24 @@ public class PostServiceImplementation implements PostService {
                 .categoryId(postDto.getCategoryId())
                 .createdDate(Instant.now())
                 .location(postDto.getLocation())
-                .user_creator(postDto.getUserCreator())
+                .userId(postDto.getUserId())
                 .phoneNumber(postDto.getPhoneNumber())
                 .build();
        return postRepository.save(post);
+    }
+
+    @Override
+    public List<Post> getUserPosts(Integer userId) {
+        Optional<List<Post>> userPostsOptional = postRepository.findPostsByUserId(userId);
+        if(userPostsOptional.isEmpty()) {
+            return new ArrayList<Post>();
+        }
+
+        return userPostsOptional.get();
+    }
+
+    @Override
+    public List<Post> getUserFavoritePosts(Integer userId) {
+        return null;
     }
 }

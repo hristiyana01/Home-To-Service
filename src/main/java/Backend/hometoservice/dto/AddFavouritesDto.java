@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FavouritesDto {
-    private Integer appUserId;
+public class AddFavouritesDto {
+    private Integer userId;
     private Integer postId;
 }

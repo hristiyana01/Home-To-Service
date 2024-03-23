@@ -1,5 +1,9 @@
 package Backend.hometoservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -30,9 +35,23 @@ public class Post {
     private String description;
     @Column(name = "created_date")
     private Instant createdDate;
-    @Column(name = "creator")
-    private Integer user_creator;
+    @Column(name = "user_id")
+    private Integer userId;
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    //    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @JoinColumn(name = "category_id", nullable = false, insertable=false, updatable=false)
+    private Category category;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @JoinColumn(name = "user_id", nullable = false, insertable=false, updatable=false)
+    private User user;
+    @OneToMany(mappedBy = "post")
+    @JsonBackReference
+    private List<Favourites> favourites;
 }

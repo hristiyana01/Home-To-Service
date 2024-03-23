@@ -1,5 +1,7 @@
 package Backend.hometoservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +10,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.relational.core.sql.In;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -52,4 +57,10 @@ public class User {
     private Instant updatedDate;
     @Column(name = "registeredDate")
     private Instant registeredDate;
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private Set<Favourites> favourites = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private List<Post> posts;
 }

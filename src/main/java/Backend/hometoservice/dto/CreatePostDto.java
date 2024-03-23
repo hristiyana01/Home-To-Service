@@ -17,7 +17,7 @@ public class CreatePostDto {
     private String status;
     private String location;
     private Integer categoryId;
-    private Integer userCreator;
+    private Integer userId;
     private String phoneNumber;
    // private List<CreateUserPostPhotoDto> userPostPhotos;
 }
