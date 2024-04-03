@@ -1,6 +1,5 @@
 package Backend.hometoservice.dto;
 
-import Backend.hometoservice.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +11,9 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateReviewDto {
-    private Integer reviewedUserId;
-    private Integer reviewerId;
-    private Double rating;
-    private Instant createdAt = Instant.now();
+public class CreateComment {
+    private Integer postId;
+    private String commentText;
+    private Integer userId;
+   // private Instant createdAt = Instant.now();
 }

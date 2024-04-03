@@ -13,17 +13,17 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "reviews")
-public class Review {
+@Table(name = "comments")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "rating")
-    private Double rating;
-    @Column(name = "reviewed_user_id")
-    private Integer reviewedId;
-    @Column(name = "reviewer_id")
-    private Integer reviewerId;
-    @Column(name = "date")
-    private Instant date = Instant.now();
+    @Column(name = "post_id")
+    private Integer postId;
+    @Column(name = "comment_text")
+    private String commentText;
+    @Column(name = "comment_date")
+    private Instant createdAt = Instant.now();
+    @Column(name = "user_id")
+    private Integer userId;
 }
