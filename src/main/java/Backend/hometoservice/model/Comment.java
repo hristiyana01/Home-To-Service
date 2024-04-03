@@ -24,6 +24,8 @@ public class Comment {
     private String commentText;
     @Column(name = "comment_date")
     private Instant createdAt = Instant.now();
+    @Column(name = "updated_date")
+    private Instant updatedDate;
     @Column(name = "user_id")
     private Integer userId;
 }

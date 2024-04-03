@@ -6,9 +6,9 @@ import Backend.hometoservice.repository.CommentRepository;
 import Backend.hometoservice.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,10 +22,29 @@ public class CommentServiceImplementation implements CommentService {
                 .commentText(createComment.getCommentText())
                 .userId(createComment.getUserId())
                 .createdAt(Instant.now())
+                .updatedDate(Instant.now())
                 .build();
          commentRepository.save(comment);
          return comment;
     }
-    @DeleteMapping("/delete-by-id/{commentId}")
-    public Comment deleteComment    
+
+    @Override
+    public void deleteById(Integer commentId) {
+        commentRepository.deleteById(commentId);
+
+        //TODO: implement message for deleeting non-existent comment
+    }
+
+    @Override
+    public Comment editById(Integer commentId, String commentText) {
+        Optional<Comment> commentOptional = commentRepository.findById(commentId);
+        if(commentOptional.isEmpty()) {
+            throw new IllegalArgumentException("Comment not found by the provided id.");
+        }
+        Comment comment = commentOptional.get();
+        comment.setCommentText(commentText);
+        comment.setUpdatedDate(Instant.now());
+        commentRepository.save(comment);
+        return comment;
+    }
 }

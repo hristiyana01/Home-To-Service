@@ -5,4 +5,6 @@ import Backend.hometoservice.model.Comment;
 
 public interface CommentService {
     Comment createComment(CreateComment createComment);
+    void deleteById(Integer commentId);
+    Comment editById(Integer commentId, String commentText);
 }
