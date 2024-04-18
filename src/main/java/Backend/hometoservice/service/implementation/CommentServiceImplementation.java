@@ -30,9 +30,12 @@ public class CommentServiceImplementation implements CommentService {
 
     @Override
     public void deleteById(Integer commentId) {
+        if(!(commentRepository.existsById(commentId))) {
+            System.out.println("Comment doesn't exist!");
+        }
         commentRepository.deleteById(commentId);
 
-        //TODO: implement message for deleeting non-existent comment
+        //TODO: implement message for deleting non-existent comment
     }
 
     @Override
