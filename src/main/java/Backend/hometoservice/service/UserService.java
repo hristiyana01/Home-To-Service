@@ -12,4 +12,9 @@ public interface UserService {
     User updateUserData(Integer id, UserDto userDto);
     Optional<User> getUserById(Integer userId);
     List<User> getAllUsers();
+
+    List<User> findAll();
+    User save(User user);
+
+    Optional<User> findById(Integer id);
 }

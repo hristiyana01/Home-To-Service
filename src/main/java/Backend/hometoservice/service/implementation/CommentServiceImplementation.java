@@ -46,7 +46,7 @@ public class CommentServiceImplementation implements CommentService {
         }
         Comment comment = commentOptional.get();
         comment.setCommentText(commentText);
-        comment.setUpdatedDate(Instant.now());
+      //  comment.setUpdatedDate(Instant.now());
         commentRepository.save(comment);
         return comment;
     }

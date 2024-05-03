@@ -3,8 +3,8 @@ package Backend.hometoservice.service.implementation;
 import Backend.hometoservice.dto.UserDto;
 import Backend.hometoservice.model.User;
 import Backend.hometoservice.repository.UserRepository;
+import Backend.hometoservice.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -13,22 +13,24 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImplementation implements Backend.hometoservice.service.UserService {
+public class UserServiceImplementation implements UserService {
     private final UserRepository userRepository;
 
     @Override
     public User createUser(UserDto userDto) {
         User user = User.builder()
-                .user_role_id(1)
                 .email(userDto.getEmail())
+                .username(userDto.getUsername())
                 .name(userDto.getUsername())
                 .surname(userDto.getSurname())
                 .password(userDto.getPassword())
+                .phone(userDto.getPhone())
+                .address(userDto.getAddress())
                 .country(userDto.getCountry())
                 .city(userDto.getCity())
                 .zip(userDto.getZip())
-                .phone(userDto.getPhone())
-                .address(userDto.getAddress())
+                .user_role_id(1)
+                .location(userDto.getLocation())
                 .registeredDate(Instant.now())
                 .updatedDate(Instant.now())
                 .build();
@@ -75,5 +77,20 @@ public class UserServiceImplementation implements Backend.hometoservice.service.
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> findById(Integer id) {
+        return userRepository.findById(id);
     }
 }

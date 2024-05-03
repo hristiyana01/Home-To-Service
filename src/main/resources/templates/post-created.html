@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html
+xmlns:th="http://thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Create</title>
+    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/css/styles.css">
+</head>
+<body class="d-flex flex-column h-100" style="background-color: antiquewhite">
+<h1>Create Post</h1>
+<main class="flex-shrink-0">
+    <section layout:fragment="body" class="py-5">
+        <div class="container">
+        <form class="row g-3" action="post/create">
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Title</label>
+                <input type="email" class="form-control" id="inputEmail4">
+            </div>
+            <div class="col-md-6">
+                <label for="Description" class="form-label">Description</label>
+                <input  class="form-control" id="Description">
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Price</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="0.00 BGN">
+            </div>
+            <div class="col-12">
+                <label for="inputAddress2" class="form-label">Address</label>
+                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+            </div>
+            <div class="col-md-6">
+                <label for="inputCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="col-md-4">
+                <label for="inputState" class="form-label">Region</label>
+                <select id="inputState" class="form-select">
+                    <option selected>Choose...</option>
+                    <option>Sofia</option>
+                    <option>Sofia-grad</option>
+                    <option>Plovdiv</option>
+                    <option>Blagoevgrad</option>
+                    <option>Plovdiv</option>
+                    <option>Pleven</option>
+                    <option>Varna</option>
+                    <option>Burgas</option>
+                    <option>Ruse</option>
+                    <option>Stara Zagora</option>
+                    <option>Veliko Tarnovo</option>
+                    <option>Sliven</option>
+                    <option>Yambol</option>
+                    <option>Shumen</option>
+                    <option>Montana</option>
+                    <option>Vratsa</option>
+                    <option>Lovech</option>
+                    <option>Gabrovo</option>
+                    <option>Razgrad</option>
+                    <option>Targovishte</option>
+                    <option>Silistra</option>
+                    <option>Dobrich</option>
+                    <option>Pazardzhik</option>
+                    <option>Kyustendil</option>
+                    <option>Haskovo</option>
+                    <option>Kardzhali</option>
+                    <option>Smolyan</option>
+                    <option>Pernik</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="inputZip" class="form-label">Contact</label>
+                <input type="text" class="form-control" id="inputZip">
+            </div>
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                        Check me out
+                    </label>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </div>
+        </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

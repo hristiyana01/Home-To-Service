@@ -17,14 +17,15 @@ public class FavouritesServiceImplementation implements FavouriteService {
     private final FavouritesRepository favouritesRepository;
 
     public Favourites addFavouritePost(AddFavouritesDto addFavouritesDto) {
-        boolean isFavorite = favouritesRepository
+        var isFavorite = !favouritesRepository
                 .findFavouritesByUserIdAndPostId(addFavouritesDto.getUserId(), addFavouritesDto.getPostId())
-                .isPresent();
+                .get().isEmpty();
 
         if(isFavorite) {
             throw new IllegalArgumentException("Post already added as favorite.");
         }
 
+        System.out.println("A");
         Favourites favourite = Favourites.builder()
                 .userId(addFavouritesDto.getUserId())
                 .postId(addFavouritesDto.getPostId())
@@ -32,6 +33,22 @@ public class FavouritesServiceImplementation implements FavouriteService {
                 .build();
         return favouritesRepository.save(favourite);
     }
+
+    @Override
+    public void deleteFavouritePost(Integer favouriteId) {
+        favouritesRepository.deleteById(favouriteId);
+    }
+
+    @Override
+    public Optional<List<Favourites>> getAllUserFavourites(Integer userId) {
+        return favouritesRepository.findAllByUserId(userId);
+    }
+//    private AddFavouritesDto mapToAddFavouritesDto(Optional<List<Favourites>> favourites) {
+//        AddFavouritesDto favouritesDto = AddFavouritesDto
+//                .f
+//                .build();
+//        return favouritesDto;
+//    }
 
     public Integer toggleFavouritePost(AddFavouritesDto addFavouritesDto) {
         Optional<List<Favourites>> favoritePosts = favouritesRepository

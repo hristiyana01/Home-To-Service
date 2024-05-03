@@ -18,11 +18,16 @@ import java.util.List;
 public class ReviewsController {
 
     private final ReviewService reviewService;
-    @PostMapping("/create")
-    public Review createReview(@RequestBody CreateReviewDto reviewDto) {
-        Review review = reviewService.createReview(reviewDto);
-        return review;
-    }
+//    @PostMapping("/create")
+//    public Review createReview(@RequestBody CreateReviewDto reviewDto) {
+//        Review review = reviewService.createReview(reviewDto);
+//        return review;
+//    }
+@PostMapping("/create")
+public String addReview(@ModelAttribute CreateReviewDto reviewDto) {
+    Review review = reviewService.createReview(reviewDto);
+    return "review-added";
+}
     @GetMapping("/get-user-reviews/{reviewedId}")
     public ResponseEntity<List<Review>> getAllReviews(@PathVariable int reviewedId) {
         List<Review> userReviews = reviewService.getAllReviewsForUser(reviewedId);

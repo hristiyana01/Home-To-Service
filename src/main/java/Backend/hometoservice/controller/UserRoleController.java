@@ -13,10 +13,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserRoleController {
     private final UserRoleService userRoleService;
 
+//    @PostMapping("/create")
+//    public UserRole createUserRole(@RequestBody UserRole userRole) {
+//        UserRole role = userRoleService.createUserRole(userRole);
+//        return role;
+//    }
     @PostMapping("/create")
-    public UserRole createUserRole(@RequestBody UserRole userRole) {
+    public String createUserRole(@ModelAttribute UserRole userRole) {
         UserRole role = userRoleService.createUserRole(userRole);
-        return role;
+        return "user-role-created";
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface FavouritesRepository extends JpaRepository<Favourites, Integer> {
-    Optional<List<Favourites>> findFavouritesByUserId(Integer userId);
+    Optional<List<Favourites>> findAllByUserId(Integer userId);
     Optional<List<Favourites>> findFavouritesByUserIdAndPostId(Integer userId, Integer postId);
 
 }

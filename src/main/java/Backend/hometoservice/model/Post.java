@@ -1,44 +1,55 @@
 package Backend.hometoservice.model;
 
+import Backend.hometoservice.enums.Status;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.*;
 
 @Builder
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
 @Table(name = "posts")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "title")
-    private String title;
+    @NotBlank(message = "Title is mandatory")
+    private String  title;
     @Column(name = "location")
     private String location;
     @Column(name = "category_id")
+    @NotBlank(message = "Category is mandatory")
     private Integer categoryId;
     @Column(name = "status")
+    @NotBlank(message = "Status is mandatory")
     private String status;
     @Column(name = "description")
     private String description;
     @Column(name = "created_date")
     private Instant createdDate;
+    @UpdateTimestamp
+    @Column(name = "updated_date")
+    private Instant updatedDate;
     @Column(name = "user_id")
     private Integer userId;
     @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "price")
+    private Double price;
 
     //    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 

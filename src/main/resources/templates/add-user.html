@@ -1,0 +1,111 @@
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheets" href="/css/styles.css">
+</head>
+<body style="background-color: antiquewhite">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-5">
+        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+                <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                        <li><a class="dropdown-item" href="blog-home.html">Blog Home</a></li>
+                        <li><a class="dropdown-item" href="blog-post.html">Blog Post</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
+                        <li><a class="dropdown-item" href="portfolio-overview.html">Portfolio Overview</a></li>
+                        <li><a class="dropdown-item" href="portfolio-item.html">Portfolio Item</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<form action="#" th:action="@{/users/register}" th:object="${user}" method="post">
+    <h1>Registration</h1>
+    <p>Fill in the form to register</p>
+
+    <p>
+    <label for="email">Email</label>
+    <input type="text" th:field="*{user.email}" id="email" placeholder="Email">
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{user.email}"></span>
+     </p>
+    <p>
+    <label for="username">Username</label>
+    <input type="text" th:field="*{user.username}" id="username" placeholder="Username">
+    <span th:if="${#fields.hasErrors('username')}" th:errors="*{user.username}"></span>
+        </p>
+    <label for="name">Name</label>
+    <input type="text" th:field="*{user.name}" id="name" placeholder="Name">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{user.name}"></span>
+    <p>
+    <label for="surname">Surname</label>
+    <input type="text" th:field="*{user.surname}" id="surname" placeholder="Surname">
+    <span th:if="${#fields.hasErrors('surname')}" th:errors="*{user.surname}"></span>
+        </p>
+    <p>
+    <label for="password">Password</label>
+    <input type="password" th:field="*{user.password}" id="password" placeholder="Password">
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{user.password}"></span>
+        </p>
+    <p>
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" th:field="*{user.confirmPassword}" id="confirmPassword" placeholder="Confirm Password">
+    <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{user.confirmPassword}"></span>
+        </p>
+    <p>
+    <label for="phone">Phone</label>
+    <input type="text" th:field="*{user.phone}" id="phone" placeholder="Phone">
+    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{user.phone}"></span>
+        </p>
+    <p>
+    <label for="address">Address</label>
+    <input type="text" th:field="*{user.address}" id="address" placeholder="Address">
+    <span th:if="${#fields.hasErrors('address')}" th:errors="*{user.address}"></span>
+        </p>
+    <p>
+    <label for="city">City</label>
+    <input type="text" th:field="*{user.city}" id="city" placeholder="City">
+    <span th:if="${#fields.hasErrors('city')}" th:errors="*{user.city}"></span>
+        </p>
+    <p>
+    <label for="country">Country</label>
+    <input type="text" th:field="*{user.country}" id="country" placeholder="Country">
+    <span th:if="${#fields.hasErrors('country')}" th:errors="*{user.country}"></span>
+        </p>
+    <p>
+    <label for="postalCode">Postal Code</label>
+    <input type="text" th:field="*{user.postalCode}" id="postalCode" placeholder="Postal Code">
+    <span th:if="${#fields.hasErrors('postalCode')}" th:errors="*{user.postalCode}"></span>
+        </p>
+    <p>
+    <label for="role">Role</label>
+    <input type="text" th:field="*{user.role}" id="role" placeholder="Role">
+    <span th:if="${#fields.hasErrors('role')}" th:errors="*{user.role}"></span>
+        </p>
+    <p>
+    <label for="status">Status</label>
+    <input type="text" th:field="*{user.status}" id="status" placeholder="Status">
+    <span th:if="${#fields.hasErrors('status')}" th:errors="*{user.status}"></span>
+        </p>
+
+
+    <input th:action="@{/register}" type="submit" value="Sign Up">
+
+</form>
+</body>
+</html>

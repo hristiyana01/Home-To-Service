@@ -1,16 +1,18 @@
 package Backend.hometoservice.controller;
 
 import Backend.hometoservice.dto.CreatePostDto;
-import Backend.hometoservice.model.Favourites;
+import Backend.hometoservice.dto.UpdatePostDto;
 import Backend.hometoservice.model.Post;
 import Backend.hometoservice.service.PostService;
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/post")
@@ -18,23 +20,46 @@ import java.util.List;
 @RestController
 public class PostController {
     private final PostService postService;
+
     @PostMapping("/create")
-    public ResponseEntity<Post> createPost(@RequestBody CreatePostDto createPostDto) {
+    public String createPost(@ModelAttribute("post") CreatePostDto createPostDto, Model model) {
         Post post = postService.createPost(createPostDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(post);
+        model.addAttribute("post", post);
+        return "post-created"; //името на html файла за изглед
     }
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Post>> getUserPosts(@PathVariable Integer userId) {
+    public String getUserPosts(@PathVariable Integer userId, Model model) {
         List<Post> posts = postService.getUserPosts(userId);
-        return ResponseEntity.ok(posts);
+        model.addAttribute("posts", posts);
+        return "user-posts";
     }
-    @GetMapping("/user-favorites/{userId}")
-    public ResponseEntity<List<Post>> getUserFavoritePosts(@PathVariable Integer userId) {
+    @GetMapping("/{userId}/favourites")
+    public String getUserFavoritePosts(@PathVariable Integer userId, Model model) {
         List<Post> favoritePosts = postService.getUserFavoritePosts(userId);
-        return ResponseEntity.ok(favoritePosts);
+        model.addAttribute("favouritePosts", favoritePosts);
+        return "user-favourite-posts";
     }
-
-
+    @PutMapping("/edit/{postId}")
+    public ResponseEntity<String> updatePost(@PathVariable Integer postId,@ModelAttribute UpdatePostDto updatePostDto) throws NotFoundException {
+        postService.updatePost(postId, updatePostDto);
+        return ResponseEntity.ok().body("Post updated successfully.");
+    }
+//    @GetMapping("post/{postId}")
+//    public ResponseEntity<String> getPost(@PathVariable Integer postId) {
+//        Post post = postService.getUserPost(postId);
+//        return ResponseEntity.ok(post)
+//    }
+    @GetMapping("/all")
+    public String getAllPosts(Model model) {
+        List<CreatePostDto> posts = postService.findAllPosts();
+        model.addAttribute("posts", posts);
+        return "posts-list";
+    }
+    @GetMapping("/all/{categoryId}")
+    public String getAllPostsByCategoryId(@PathVariable Integer categoryId) {
+        Optional<List<Post>> posts = postService.findAllPostsByCategoryId(categoryId);
+        return "posts-by-category";
+    }
 //    @PutMapping("/add-photos")
-//deleting -. inactive/active
+//deleting -. inactive/active status !!
 }

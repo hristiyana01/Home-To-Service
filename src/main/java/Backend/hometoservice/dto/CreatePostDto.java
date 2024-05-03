@@ -1,5 +1,6 @@
 package Backend.hometoservice.dto;
 
+import Backend.hometoservice.enums.Status;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CreatePostDto {
     private String title;
     private String description;

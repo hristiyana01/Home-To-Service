@@ -11,10 +11,10 @@ import org.hibernate.annotations.Type;
 import java.time.Instant;
 
 @Builder
-@Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Data
 @Table(name = "user_post_photos")
 public class UserPostPhotos {
     @Id
