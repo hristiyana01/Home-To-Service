@@ -7,6 +7,9 @@ import Backend.hometoservice.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class CategoryServiceImplementation implements CategoryService {
@@ -20,5 +23,14 @@ public class CategoryServiceImplementation implements CategoryService {
                 .build();
         categoryRepository.save(category);
         return category;
+    }
+    @Override
+    public List<Category> findAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Optional<Category> getById(Integer categoryId) {
+        return categoryRepository.findById(categoryId);
     }
 }

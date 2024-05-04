@@ -29,6 +29,7 @@ public class UserServiceImplementation implements Backend.hometoservice.service.
                 .zip(userDto.getZip())
                 .phone(userDto.getPhone())
                 .address(userDto.getAddress())
+                .location(userDto.getLocation())
                 .registeredDate(Instant.now())
                 .updatedDate(Instant.now())
                 .build();

@@ -7,9 +7,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/category")
@@ -20,5 +21,16 @@ public class CategoryController {
     public ResponseEntity<Category> addCategory(@RequestBody CategoryDto categoryDto) {
         var createdCategory = categoryService.addCategory(categoryDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
+    }
+    @GetMapping("/categories")
+    public List<Category> getAllCategories() {
+        List<Category> categories = categoryService.findAllCategories();
+
+        return categories;
+    }
+    @GetMapping("/get/{categoryId}")
+    public ResponseEntity<Optional<Category>> getCategory(@PathVariable Integer categoryId) {
+        Optional<Category> category = categoryService.getById(categoryId);
+        return ResponseEntity.ok(category);
     }
 }

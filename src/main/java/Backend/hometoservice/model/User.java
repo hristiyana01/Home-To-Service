@@ -3,6 +3,7 @@ package Backend.hometoservice.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,17 +28,24 @@ public class User {
     @Column(name = "id")
     private Integer id;
     @Column(name = "email")
+    @NotBlank(message = "Email is mandatory")
     private String email;
     @Column(name = "password")
+    @NotBlank(message = "Password is mandatory")
     private String password;
+    @NotBlank(message = "Username is mandatory")
+    @Column(name = "username")
+    private String username;
     @Column(name = "name")
+    @NotBlank(message = "Name is mandatory")
     private String name;
     @Column(name = "surname")
+    @NotBlank(message = "Surname is mandatory")
     private String surname;
     @Column(name = "user_role_id")
     private Integer user_role_id;
-    @Column(name = "location_id")
-    private Integer location_id;
+    @Column(name = "location")
+    private String location;
     @Column(name = "phone_number")
     private String phone;
     @Column (name = "address")
@@ -46,8 +54,6 @@ public class User {
     private String city;
     @Column(name = "country")
     private String country;
-    @Column(name = "state")
-    private String state;
     @Column(name = "zip")
     private String zip;
     @Column(name = "updated_date")
