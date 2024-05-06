@@ -5,11 +5,13 @@ import Backend.hometoservice.model.Favourites;
 import Backend.hometoservice.repository.FavouritesRepository;
 import Backend.hometoservice.service.FavouriteService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -17,9 +19,9 @@ public class FavouritesServiceImplementation implements FavouriteService {
     private final FavouritesRepository favouritesRepository;
 
     public Favourites addFavouritePost(AddFavouritesDto addFavouritesDto) {
-        boolean isFavorite = favouritesRepository
+        var isFavorite = !favouritesRepository
                 .findFavouritesByUserIdAndPostId(addFavouritesDto.getUserId(), addFavouritesDto.getPostId())
-                .isPresent();
+                .get().isEmpty();
 
         if(isFavorite) {
             throw new IllegalArgumentException("Post already added as favorite.");
@@ -31,6 +33,15 @@ public class FavouritesServiceImplementation implements FavouriteService {
                 .favoriteDate(Instant.now())
                 .build();
         return favouritesRepository.save(favourite);
+    }
+
+    @Override
+    public List<Integer> getAllUserFavouritePosts(Integer userId) {
+        var favoritesByIdOpt = favouritesRepository.findFavouritesByUserId(userId);
+
+        return favoritesByIdOpt.get()
+                .stream().map((favorite) ->  favorite.getPostId())
+                .collect(Collectors.toList());
     }
 
     public Integer toggleFavouritePost(AddFavouritesDto addFavouritesDto) {
@@ -54,4 +65,12 @@ public class FavouritesServiceImplementation implements FavouriteService {
 
         return addedFavorite.getId();
     }
+
+    public AddFavouritesDto mapFavorite(Favourites fav){
+        return AddFavouritesDto.builder()
+                .postId(fav.getPostId())
+                .userId(fav.getUserId())
+                .build();
+    }
+
 }

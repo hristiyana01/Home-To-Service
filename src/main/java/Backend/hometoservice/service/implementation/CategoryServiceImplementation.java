@@ -4,11 +4,13 @@ import Backend.hometoservice.dto.CategoryDto;
 import Backend.hometoservice.model.Category;
 import Backend.hometoservice.repository.CategoryRepository;
 import Backend.hometoservice.service.CategoryService;
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,12 +27,40 @@ public class CategoryServiceImplementation implements CategoryService {
         return category;
     }
     @Override
-    public List<Category> findAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDto> findAllCategories() {
+        List<Category> categories = categoryRepository.findAll();
+        return categories.stream().map((category) -> mapToCategoryDto(category)).collect(Collectors.toList());
+    }
+
+    private CategoryDto mapToCategoryDto(Category category) {
+        CategoryDto categoryDto = CategoryDto.builder()
+                .id(category.getId())
+                .name(category.getName())
+                .description(category.getDescription())
+                .build();
+        return categoryDto;
     }
 
     @Override
-    public Optional<Category> getById(Integer categoryId) {
-        return categoryRepository.findById(categoryId);
+    public CategoryDto getById(Integer categoryId) throws NotFoundException {
+        var cat = categoryRepository.findById(categoryId);
+        if(cat.isEmpty()){
+            throw new NotFoundException("Category with id " + categoryId +" not found.");
+        }
+
+        var category = cat.get();
+        return mapToCategoryDto(category);
+    }
+
+    @Override
+    public Category updateCategory(Integer categoryId) throws NotFoundException {
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+        if(optionalCategory.isEmpty()) {
+            throw new NotFoundException("Post with id " + categoryId +" not found.");
+        }
+        Category category = optionalCategory.get();
+        category.setName(category.getName());
+        category.setDescription(category.getDescription());
+        return category;
     }
 }

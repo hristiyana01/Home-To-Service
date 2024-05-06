@@ -26,6 +26,12 @@ public class PostController {
         Post post = postService.createPost(createPostDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
+
+    @PutMapping("/edit/{postId}")
+    public ResponseEntity<Post> updatePost(@PathVariable Integer postId,@RequestBody UpdatePostDto updatePostDto) throws NotFoundException {
+        Post post = postService.updatePost(postId, updatePostDto);
+        return ResponseEntity.ok(post);
+    }
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Post>> getUserPosts(@PathVariable Integer userId) {
         List<Post> posts = postService.getUserPosts(userId);
@@ -35,11 +41,6 @@ public class PostController {
     public ResponseEntity<List<Post>> getUserFavoritePosts(@PathVariable Integer userId) {
         List<Post> favoritePosts = postService.getUserFavoritePosts(userId);
         return ResponseEntity.ok(favoritePosts);
-    }
-    @PutMapping("/edit/{postId}")
-    public ResponseEntity<String> updatePost(@PathVariable Integer postId,@RequestBody UpdatePostDto updatePostDto) throws NotFoundException {
-        postService.updatePost(postId, updatePostDto);
-        return ResponseEntity.ok().body("Post updated successfully.");
     }
     @GetMapping("/all")
     public ResponseEntity<List<CreatePostDto>> getAllPosts() {

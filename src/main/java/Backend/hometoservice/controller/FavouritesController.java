@@ -2,15 +2,14 @@ package Backend.hometoservice.controller;
 
 import Backend.hometoservice.dto.AddFavouritesDto;
 import Backend.hometoservice.model.Favourites;
-import Backend.hometoservice.repository.FavouritesRepository;
 import Backend.hometoservice.service.FavouriteService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/favourites")
@@ -22,4 +21,10 @@ private final FavouriteService favouriteService;
         Favourites favourites = favouriteService.addFavouritePost(favourite);
         return ResponseEntity.ok().body(favourites);
     }
+    @GetMapping("/get-all-by-user/{userId}")
+    public ResponseEntity<List<Integer>> getAllUserFavouritesPosts(@PathVariable Integer userId) {
+        var users = favouriteService.getAllUserFavouritePosts(userId);
+        return ResponseEntity.ok(users);
+    }
+
 }
