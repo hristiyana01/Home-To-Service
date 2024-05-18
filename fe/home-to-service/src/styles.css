@@ -1,0 +1,31 @@
+/* src/Components/CategoriesList.css */
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.category-card {
+    display: flex;
+    align-items: center;
+}
+
+.category-image {
+    width: 100px;
+    height: 100px;
+}
+
+.category-name {
+    margin-left: 20px;
+}
+
+.categories-heading {
+    margin-bottom: 40px;
+}
+
+.category-card:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
