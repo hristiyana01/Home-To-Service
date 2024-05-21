@@ -16,6 +16,11 @@ function MyNavbar() {
             <Nav.Link href="#about">About</Nav.Link>
             <Nav.Link href="/contacts" component={ContactsPage}>Contact</Nav.Link>
           </Nav>
+          <Nav clasName="right-side-navbar">
+            <Nav.Link className="create-post-link" href="/post/create">Create Post</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/register">Register</Nav.Link>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

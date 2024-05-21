@@ -73,5 +73,20 @@
     margin-top: 80px;
 }
 
+/* src/Components/MyNavbar.css */
 
+.create-post-link {
+    background-color: #282c34;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.create-post-link:hover {
+    transform: scale(1.1);
+    color: #282c34;
+    background-color: white;
+    border-color: #282c34 !important;
+}
 
