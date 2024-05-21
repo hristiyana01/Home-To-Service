@@ -1,6 +1,7 @@
 package Backend.hometoservice.controller;
 
 import Backend.hometoservice.dto.CreatePostDto;
+import Backend.hometoservice.dto.PostDto;
 import Backend.hometoservice.dto.UpdatePostDto;
 import Backend.hometoservice.model.Favourites;
 import Backend.hometoservice.model.Post;
@@ -43,8 +44,8 @@ public class PostController {
         return ResponseEntity.ok(favoritePosts);
     }
     @GetMapping("/all")
-    public ResponseEntity<List<CreatePostDto>> getAllPosts() {
-        List<CreatePostDto> posts = postService.findAllPosts();
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> posts = postService.findAllPosts();
         return ResponseEntity.ok(posts);
     }
     @GetMapping("/all/{categoryId}")

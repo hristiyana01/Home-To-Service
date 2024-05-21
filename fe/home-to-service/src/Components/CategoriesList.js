@@ -24,7 +24,7 @@ function CategoriesList() {
       <h1 className="categories-heading">Categories</h1>
       <div className="categories-grid">
         {categories.map(category => (
-          <Link to={`/posts-for-category/${category.id}`} key={category.id}>
+          <Link to={`/posts/category/${category.id}`} key={category.id} className="category-anchor">
             <div className="category-card">
               <img className="category-image" src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt={category.name} />
               <h2 className="category-name">{category.name}</h2>

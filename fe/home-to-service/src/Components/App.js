@@ -8,6 +8,7 @@ import HomePage from "./HomePage";
 import ContactsPage from "./ContactsPage";
 import CategoriesList from "./CategoriesList";
 import PostsForCategory from "./PostsForCategory";
+import AllPostsPage from "./AllPostsPage";
 
 function App() {
   return (
@@ -22,7 +23,9 @@ function App() {
             <Route path="/post/create" element={<CreatePostPage />} />
             <Route path="contacts" element={<ContactsPage />} />
             <Route path="/categories-list" element={<CategoriesList />} />
-            <Route path="/posts-for-category/:id" element={<PostsForCategory />} />
+            <Route path="/posts/category/:id" element={<PostsForCategory />} />
+            <Route path="/all-posts" element={<AllPostsPage />} />
+
           </Routes>
         </header>
         <Footer />

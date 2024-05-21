@@ -1,6 +1,7 @@
 package Backend.hometoservice.service;
 
 import Backend.hometoservice.dto.CreatePostDto;
+import Backend.hometoservice.dto.PostDto;
 import Backend.hometoservice.dto.UpdatePostDto;
 import Backend.hometoservice.model.Post;
 import javassist.NotFoundException;
@@ -15,7 +16,7 @@ public interface PostService {
 
     Post updatePost(Integer postId, UpdatePostDto updatePostDto) throws NotFoundException;
 
-    List<CreatePostDto> findAllPosts();
+    List<PostDto> findAllPosts();
 
     List<Post> findAllPostsByCategoryId(Integer categoryId);
 }

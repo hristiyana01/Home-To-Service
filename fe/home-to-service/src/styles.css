@@ -20,6 +20,13 @@
     margin-left: 20px;
 }
 
+.category-anchor {
+    color: white;
+    text-decoration: none;
+}
+/* src/styles.css */
+
+
 .categories-heading {
     margin-bottom: 40px;
 }
@@ -29,3 +36,42 @@
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out;
 }
+
+/* src/Components/PostsForCategory.css */
+
+.category-posts-main {
+    width: 100%;
+}
+
+.post {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.post-image {
+    width: 150px;
+    height: 150px;
+}
+
+.post-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 10px;
+    width: 80%;
+}
+
+.post-price {
+    white-space: nowrap;
+    margin-top: 80px;
+}
+
+
+

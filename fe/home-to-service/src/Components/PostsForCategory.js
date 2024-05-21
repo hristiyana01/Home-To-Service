@@ -26,17 +26,26 @@ function PostsForCategory() {
   }, [id]);
 
   return (
-    <div>
+    <div className="category-posts-main">
       <h1>Posts for Category {id}</h1>
-      {posts.map(post => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.content}</p>
-          <p>{post.location}</p>
-          <p>{post.price}</p>
-
-        </div>
-      ))}
+      {posts.map(post =>
+        {
+          const date = new Date(post.createdDate);
+          const formattedDate = date.toLocaleDateString();
+          const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          return (
+          <div key={post.id} className="post">
+            <img className="post-image" src="https://dummyimage.com/150x150/dee2e6/6c757d.jpg" alt={post.title} />
+            <div className="post-details">
+              <h2>{post.title}</h2>
+              <p>{post.location}</p>
+              <p>{`${formattedDate}, ${formattedTime}`}</p>
+            </div>
+            <p className="post-price">{post.price} BGN</p>
+          </div>
+        );
+        }
+      )}
     </div>
   );
 }

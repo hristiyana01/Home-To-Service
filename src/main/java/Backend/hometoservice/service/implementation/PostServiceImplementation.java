@@ -1,6 +1,7 @@
 package Backend.hometoservice.service.implementation;
 
 import Backend.hometoservice.dto.CreatePostDto;
+import Backend.hometoservice.dto.PostDto;
 import Backend.hometoservice.dto.UpdatePostDto;
 import Backend.hometoservice.model.Favourites;
 import Backend.hometoservice.model.Post;
@@ -84,19 +85,21 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public List<CreatePostDto> findAllPosts() {
+    public List<PostDto> findAllPosts() {
         List<Post> posts = postRepository.findAll();
-        return posts.stream().map(post -> mapToCreatePostDto(post)).collect(Collectors.toList());
+        return posts.stream().map(post -> mapToPostDto(post)).collect(Collectors.toList());
     }
 
-    private CreatePostDto mapToCreatePostDto(Post post) {
-        CreatePostDto postDto = CreatePostDto.builder()
+    private PostDto mapToPostDto(Post post) {
+        PostDto postDto = PostDto.builder()
                 .title(post.getTitle())
                 .description(post.getDescription())
                 .categoryId(post.getCategoryId())
                 .userId(post.getUserId())
                 .location(post.getLocation())
                 .status(post.getStatus())
+                .id(post.getId())
+                .createdDate(post.getCreatedDate())
                 .build();
         return postDto;
     }
