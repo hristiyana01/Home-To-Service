@@ -36,7 +36,7 @@ function MainContent () {
           <div className="col mb-5">
             <div className="card h-100">
               <div className="badge bg-dark text-white position-absolute"
-                   style={{top: "0.5rem;", right: "0.5rem"}}>Sale
+                   style={{top: "0.5rem", right: "0.5rem"}}>Sale
               </div>
               <img className="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."/>
               <div className="card-body p-4">
@@ -61,7 +61,7 @@ function MainContent () {
           <div className="col mb-5">
             <div className="card h-100">
               <div className="badge bg-dark text-white position-absolute"
-                   style={{top: "0.5rem;", right: "0.5rem"}}>Sale
+                   style={{top: "0.5rem", right: "0.5rem"}}>Sale
               </div>
               <img className="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."/>
               <div className="card-body p-4">

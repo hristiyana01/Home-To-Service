@@ -3,9 +3,9 @@ package Backend.hometoservice.controller;
 import Backend.hometoservice.dto.CreatePostDto;
 import Backend.hometoservice.dto.PostDto;
 import Backend.hometoservice.dto.UpdatePostDto;
-import Backend.hometoservice.model.Favourites;
 import Backend.hometoservice.model.Post;
 import Backend.hometoservice.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,6 +52,12 @@ public class PostController {
     public ResponseEntity<List<Post>> getAllPostsByCategoryId(@PathVariable Integer categoryId) {
         List<Post> posts = postService.findAllPostsByCategoryId(categoryId);
         return ResponseEntity.ok(posts);
+    }
+    @Operation(summary= "Gets post by ID")
+    @GetMapping("/get/{postId}")
+    public ResponseEntity<Optional<Post>> getPostById(@PathVariable Integer postId)  {
+        Optional<Post> post = postService.getPostByPostId(postId);
+        return ResponseEntity.ok().body(post);
     }
 //    @PutMapping("/add-photos")
 //deleting -. inactive/active

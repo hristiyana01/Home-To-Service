@@ -5,13 +5,11 @@ import Backend.hometoservice.model.Favourites;
 import Backend.hometoservice.repository.FavouritesRepository;
 import Backend.hometoservice.service.FavouriteService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -36,13 +34,22 @@ public class FavouritesServiceImplementation implements FavouriteService {
     }
 
     @Override
-    public List<Integer> getAllUserFavouritePosts(Integer userId) {
+    public List<Favourites> getAllUserFavouritePosts(Integer userId) {
         var favoritesByIdOpt = favouritesRepository.findFavouritesByUserId(userId);
 
-        return favoritesByIdOpt.get()
-                .stream().map((favorite) ->  favorite.getPostId())
-                .collect(Collectors.toList());
+        return favoritesByIdOpt.get();
     }
+
+    @Override
+    public void deleteById(Integer favId) {
+        if(!(favouritesRepository.existsById(favId))) {
+            System.out.println("Post not added to favorites");
+        }
+        favouritesRepository.deleteById(favId);
+
+        //TODO: implement message for deleting non-existent comment
+    }
+
 
     public Integer toggleFavouritePost(AddFavouritesDto addFavouritesDto) {
         Optional<List<Favourites>> favoritePosts = favouritesRepository

@@ -1,6 +1,5 @@
 //package Backend.hometoservice.model;
 //
-//
 //import jakarta.persistence.*;
 //import lombok.AllArgsConstructor;
 //import lombok.Builder;
@@ -12,15 +11,11 @@
 //@NoArgsConstructor
 //@Data
 //@Entity
-//@Table(name = "user_roles")
-//public class UserRole {
+//@Table(name = "roles")
+//public class Role {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//
-//    @ManyToOne
-//    private User user;
-//
-//    @ManyToOne
-//    private Role role;
+//    private Integer id;
+//    @Column(name = "name")
+//    private String name;
 //}

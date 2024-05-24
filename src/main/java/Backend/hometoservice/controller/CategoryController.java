@@ -4,6 +4,7 @@ import Backend.hometoservice.dto.CategoryDto;
 import Backend.hometoservice.model.Category;
 import Backend.hometoservice.service.CategoryService;
 import io.swagger.models.Response;
+import io.swagger.v3.oas.annotations.Operation;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,16 +29,18 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDto>> getAllCategories() {
         return  ResponseEntity.ok(categoryService.findAllCategories());
     }
+    @Operation(summary= "Gets category by ID")
     @GetMapping("/get/{categoryId}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable Integer categoryId) throws NotFoundException {
         CategoryDto category = categoryService.getById(categoryId);
         return ResponseEntity.ok(category);
     }
     //only for sysadmin
-    //TODO: who updates the category -> ONLY SYSADMIN !!!
+    //TODO: who updates the category -> ONLY SYSADMIN !!! [to do add are needed authentication to know the app who are you and who have permission to do that]
+
     @PutMapping("/update/{categoryId}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Integer categoryId) throws NotFoundException {
-        Category category = categoryService.updateCategory(categoryId);
+    public ResponseEntity<Category> updateCategory(@PathVariable Integer categoryId, @RequestBody CategoryDto categoryDto) throws NotFoundException {
+        Category category = categoryService.updateCategory(categoryId, categoryDto);
         return ResponseEntity.ok(category);
     }
 }

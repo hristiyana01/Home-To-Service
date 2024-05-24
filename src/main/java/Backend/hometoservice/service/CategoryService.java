@@ -13,5 +13,5 @@ public interface CategoryService {
     List<CategoryDto> findAllCategories();
 
     CategoryDto getById(Integer categoryId) throws NotFoundException;
-    Category updateCategory(Integer categoryId) throws NotFoundException;
+    Category updateCategory(Integer categoryId, CategoryDto categoryDto) throws NotFoundException;
 }

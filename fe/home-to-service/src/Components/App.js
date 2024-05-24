@@ -8,9 +8,11 @@ import HomePage from "./HomePage";
 import ContactsPage from "./ContactsPage";
 import CategoriesList from "./CategoriesList";
 import PostsForCategory from "./PostsForCategory";
-import AllPostsPage from "./AllPostsPage";
+//import AllPostsPage from "./AllPostsPage";
 
 function App() {
+  const Usercontext = React.createContext();
+
   return (
     <Router>
       <div className="App">
@@ -24,8 +26,7 @@ function App() {
             <Route path="contacts" element={<ContactsPage />} />
             <Route path="/categories-list" element={<CategoriesList />} />
             <Route path="/posts/category/:id" element={<PostsForCategory />} />
-            <Route path="/all-posts" element={<AllPostsPage />} />
-
+            {/*<Route path="/all-posts" element={<AllPostsPage />} />*/}
           </Routes>
         </header>
         <Footer />

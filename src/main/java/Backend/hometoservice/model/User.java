@@ -1,14 +1,12 @@
 package Backend.hometoservice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+//import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.relational.core.sql.In;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -23,27 +21,33 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
+
+    public User(String username, String password){
+        this.setUsername(username);
+        this.setPassword(password);
+    }
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private Integer id;
     @Column(name = "email")
-    @NotBlank(message = "Email is mandatory")
+  //  @NotBlank(message = "Email is mandatory")
     private String email;
     @Column(name = "password")
-    @NotBlank(message = "Password is mandatory")
+//    @NotBlank(message = "Password is mandatory")
     private String password;
-    @NotBlank(message = "Username is mandatory")
+  //  @NotBlank(message = "Username is mandatory")
     @Column(name = "username")
     private String username;
     @Column(name = "name")
-    @NotBlank(message = "Name is mandatory")
+ //   @NotBlank(message = "Name is mandatory")
     private String name;
     @Column(name = "surname")
-    @NotBlank(message = "Surname is mandatory")
+ //   @NotBlank(message = "Surname is mandatory")
     private String surname;
-    @Column(name = "user_role_id")
-    private Integer user_role_id;
+    //@Column(name = "user_role_id")
+    //private Integer user_role_id;
     @Column(name = "location")
     private String location;
     @Column(name = "phone_number")
@@ -66,4 +70,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonBackReference
     private List<Post> posts;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    private Set<Role> roles = new HashSet<>();
 }

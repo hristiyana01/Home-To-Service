@@ -109,4 +109,13 @@ public class PostServiceImplementation implements PostService {
         Optional<List<Post>> posts = postRepository.findPostsByCategoryId(categoryId);
         return posts.orElseGet(ArrayList::new);
     }
+
+    @Override
+    public Optional<Post> getPostByPostId(Integer postId)  {
+        Optional<Post> post = postRepository.findById(postId);
+//        if(post.isEmpty()) {
+//            throw new NotFoundException("Post with id " + postId + " not found.");
+//        }
+        return post;
+    }
 }

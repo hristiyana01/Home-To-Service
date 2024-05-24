@@ -3,10 +3,9 @@ package Backend.hometoservice.model;
 import Backend.hometoservice.enums.Status;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+//import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,15 +25,15 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "title")
-    @NotBlank(message = "Title is mandatory")
+  //  @NotBlank(message = "Title is mandatory")
     private String title;
     @Column(name = "location")
     private String location;
     @Column(name = "category_id")
-    @NotBlank(message = "Category is mandatory")
+    //@NotBlank(message = "Category is mandatory")
     private Integer categoryId;
     @Column(name = "status")
-    @NotBlank(message = "Status is mandatory")
+  //  @NotBlank(message = "Status is mandatory")
     private Status status;
     @Column(name = "description")
     private String description;

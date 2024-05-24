@@ -19,4 +19,5 @@ public interface PostService {
     List<PostDto> findAllPosts();
 
     List<Post> findAllPostsByCategoryId(Integer categoryId);
+    Optional<Post> getPostByPostId(Integer postId);
 }

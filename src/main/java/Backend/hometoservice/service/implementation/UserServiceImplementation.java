@@ -1,13 +1,17 @@
 package Backend.hometoservice.service.implementation;
 
+//import Backend.hometoservice.authorization.dto.ERole;
 import Backend.hometoservice.dto.UserDto;
+//import Backend.hometoservice.model.Role;
 import Backend.hometoservice.model.User;
+//import Backend.hometoservice.repository.RolesRepository;
 import Backend.hometoservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,11 +19,10 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImplementation implements Backend.hometoservice.service.UserService {
     private final UserRepository userRepository;
-
+   // private final RolesRepository rolesRepository;
     @Override
     public User createUser(UserDto userDto) {
         User user = User.builder()
-                .user_role_id(1)
                 .email(userDto.getEmail())
                 .name(userDto.getUsername())
                 .surname(userDto.getSurname())
@@ -33,7 +36,12 @@ public class UserServiceImplementation implements Backend.hometoservice.service.
                 .registeredDate(Instant.now())
                 .updatedDate(Instant.now())
                 .build();
-        userRepository.save(user);
+
+//        var userRole = rolesRepository.findByName(ERole.ROLE_USER);
+//        var userRoles = new HashSet<Role>();
+//        userRoles.add(userRole.get());
+//        user.setRoles(userRoles);
+//        userRepository.save(user);
         return user;
     }
 
@@ -60,7 +68,7 @@ public class UserServiceImplementation implements Backend.hometoservice.service.
         updatedUser.setName(userDto.getUsername()!= null ? userDto.getUsername() : updatedUser.getEmail());
         updatedUser.setSurname(userDto.getSurname()!= null ? userDto.getSurname() : updatedUser.getSurname());
         updatedUser.setPassword(userDto.getPassword()!= null ? userDto.getPassword() : updatedUser.getPassword());
-        updatedUser.setUser_role_id(userDto.getUserRoleId()!= null ? userDto.getUserRoleId() : updatedUser.getUser_role_id());
+        //updatedUser.setUser_role_id(userDto.getUserRoleId()!= null ? userDto.getUserRoleId() : updatedUser.getUser_role_id());
         updatedUser.setPhone(userDto.getPhone()!= null ? userDto.getPhone() : updatedUser.getPhone());
         updatedUser.setAddress(userDto.getAddress()!= null ? userDto.getAddress() : updatedUser.getAddress());
 

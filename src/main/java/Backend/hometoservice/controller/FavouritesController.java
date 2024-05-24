@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/favourites")
@@ -22,9 +21,14 @@ private final FavouriteService favouriteService;
         return ResponseEntity.ok().body(favourites);
     }
     @GetMapping("/get-all-by-user/{userId}")
-    public ResponseEntity<List<Integer>> getAllUserFavouritesPosts(@PathVariable Integer userId) {
-        var users = favouriteService.getAllUserFavouritePosts(userId);
-        return ResponseEntity.ok(users);
+    public ResponseEntity<List<Favourites>> getAllUserFavouritesPosts(@PathVariable Integer userId) {
+        var favouritePosts = favouriteService.getAllUserFavouritePosts(userId);
+        return ResponseEntity.ok(favouritePosts);
+    }
+    @DeleteMapping("/remove/{favId}")
+    public ResponseEntity<Favourites> removeFavoritePost (@PathVariable Integer favId) {
+        favouriteService.deleteById(favId);
+        return ResponseEntity.ok().build();
     }
 
 }

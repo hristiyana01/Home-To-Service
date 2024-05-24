@@ -29,7 +29,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/delete-by-id/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable Integer commentId) {
+    public ResponseEntity<Comment> deleteComment(@PathVariable Integer commentId) {
       commentService.deleteById(commentId);
       return ResponseEntity.ok().build();
     }

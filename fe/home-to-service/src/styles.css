@@ -83,10 +83,38 @@
     padding: 10px;
 }
 
+.post-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 2rem;
+
+}
+
+.post-location {
+    font-size: 1.1rem;
+}
+
+.post-date {
+    font-size: 1.1rem;
+}
+
 .create-post-link:hover {
     transform: scale(1.1);
     color: #282c34;
     background-color: white;
     border-color: #282c34 !important;
+}
+
+.post-overview-rightside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.post-heart-container {
+    align-self: flex-end;
+    margin-top: 15px;
 }
 
