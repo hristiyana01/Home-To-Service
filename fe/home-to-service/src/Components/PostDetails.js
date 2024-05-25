@@ -5,6 +5,8 @@ function PostDetails() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
+  const user = useContext(UserContext);
+
 
   useEffect(() => {
     // Fetch post details

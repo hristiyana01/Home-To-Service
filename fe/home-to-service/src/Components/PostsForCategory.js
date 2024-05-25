@@ -1,22 +1,20 @@
-// src/Components/PostsForCategory.js
-
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import PostOverview from "./PostOverview";
+import {UserContext} from "./App";
 
 function PostsForCategory() {
   const [posts, setPosts] = useState([]);
-  const { id } = useParams();
+  const { categoryId } = useParams();
+  const { user } = useContext(UserContext)
+  console.log('haide usera mi');
+  console.log(user);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const responseCategories = await axios.get(`http://localhost:8080/post/all/${id}`);
-        //todo implement category name instead of id
-        // style the posts
-        // hover links remove annoying blue color
-        const response = await axios.get(`http://localhost:8080/post/all/${id}`);
+        const response = await axios.get(`http://localhost:8080/post/all/${categoryId}`);
         setPosts(response.data);
       } catch (error) {
         console.error('There was an error!', error);
@@ -24,11 +22,12 @@ function PostsForCategory() {
     };
 
     fetchPosts();
-  }, [id]);
+  }, [categoryId]);
+
 
   return (
     <div className="category-posts-main">
-      <h1>Posts for Category {id}</h1>
+      <h1>Posts for Category {categoryId}</h1>
       {posts.map(post => <PostOverview key={post.id} post={post} />)}
 
       {/*{posts.map(post =>*/}

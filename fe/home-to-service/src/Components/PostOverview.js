@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
+import {UserContext} from "./App";
 
 
 function PostOverview({ post }) {
   const date = new Date(post.createdDate);
   const formattedDate = date.toLocaleDateString();
   const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const {user} = useContext(UserContext);
 
-  const handleFavouriteIconClick = async () => {
+  const handleFavouriteIconClick = async (postId, isFavorite) => {
     try {
       const response = await axios.post('http://localhost:8080/favourites/add', {
         userId: 1,

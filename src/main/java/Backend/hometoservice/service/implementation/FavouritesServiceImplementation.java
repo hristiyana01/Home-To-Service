@@ -1,6 +1,9 @@
 package Backend.hometoservice.service.implementation;
 
 import Backend.hometoservice.dto.AddFavouritesDto;
+import Backend.hometoservice.dto.FavoritePostsToCheckDto;
+import Backend.hometoservice.dto.PostsToFavoriteMappingsResultDto;
+import Backend.hometoservice.dto.TogglePostAsFavoriteDto;
 import Backend.hometoservice.model.Favourites;
 import Backend.hometoservice.repository.FavouritesRepository;
 import Backend.hometoservice.service.FavouriteService;
@@ -8,8 +11,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -51,26 +58,41 @@ public class FavouritesServiceImplementation implements FavouriteService {
     }
 
 
-    public Integer toggleFavouritePost(AddFavouritesDto addFavouritesDto) {
+    public Boolean toggleFavouritePost(TogglePostAsFavoriteDto togglePostAsFavorite) {
         Optional<List<Favourites>> favoritePosts = favouritesRepository
-                .findFavouritesByUserIdAndPostId(addFavouritesDto.getUserId(), addFavouritesDto.getPostId());
+                .findFavouritesByUserIdAndPostId(togglePostAsFavorite.getUserId(), togglePostAsFavorite.getPostId());
 
         boolean isAlreadyAddedAsFavorite = favoritePosts.isPresent() && !favoritePosts.get().isEmpty();
 
         if(isAlreadyAddedAsFavorite) {
             Integer favoriteId = favoritePosts.get().getFirst().getId();
             favouritesRepository.deleteById(favoriteId);
-            return favoriteId;
+            return false;
         }
 
         Favourites favourite = Favourites.builder()
-                .userId(addFavouritesDto.getUserId())
-                .postId(addFavouritesDto.getPostId())
+                .userId(togglePostAsFavorite.getUserId())
+                .postId(togglePostAsFavorite.getPostId())
                 .favoriteDate(Instant.now())
                 .build();
         Favourites addedFavorite = favouritesRepository.save(favourite);
 
-        return addedFavorite.getId();
+        return true;
+    }
+
+    @Override
+    public PostsToFavoriteMappingsResultDto checkFavoritePosts(FavoritePostsToCheckDto favouritePostsToCheck) {
+        var postsToFavouriteMap = favouritePostsToCheck.getPostsToCheck().stream().distinct().collect(Collectors.toMap(Function.identity(), postId -> false));
+        var userFavoritePostsResultOpt = this.favouritesRepository.findAllByUserIdAndPostIdIn(favouritePostsToCheck.getUserId(), favouritePostsToCheck.getPostsToCheck());
+
+        var userFavoritePostsResult = userFavoritePostsResultOpt.get();
+        for(Favourites favourite : userFavoritePostsResult) {
+            postsToFavouriteMap.put(favourite.getPostId(), true);
+        }
+
+        var result = new PostsToFavoriteMappingsResultDto();
+        result.setFavoritePostsMappings(postsToFavouriteMap);
+        return result;
     }
 
     public AddFavouritesDto mapFavorite(Favourites fav){

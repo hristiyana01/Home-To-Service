@@ -1,6 +1,9 @@
 package Backend.hometoservice.controller;
 
 import Backend.hometoservice.dto.AddFavouritesDto;
+import Backend.hometoservice.dto.FavoritePostsToCheckDto;
+import Backend.hometoservice.dto.PostsToFavoriteMappingsResultDto;
+import Backend.hometoservice.dto.TogglePostAsFavoriteDto;
 import Backend.hometoservice.model.Favourites;
 import Backend.hometoservice.service.FavouriteService;
 import lombok.AllArgsConstructor;
@@ -25,10 +28,22 @@ private final FavouriteService favouriteService;
         var favouritePosts = favouriteService.getAllUserFavouritePosts(userId);
         return ResponseEntity.ok(favouritePosts);
     }
+
     @DeleteMapping("/remove/{favId}")
     public ResponseEntity<Favourites> removeFavoritePost (@PathVariable Integer favId) {
         favouriteService.deleteById(favId);
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/toggle")
+    public ResponseEntity<Boolean> ToggleFavoritePost(@RequestBody TogglePostAsFavoriteDto togglePostAsFavorite) {
+        var resp = favouriteService.toggleFavouritePost(togglePostAsFavorite);
+        return ResponseEntity.ok(resp);
+    }
+
+    @PostMapping("/check-favourite-posts-for-user")
+    public ResponseEntity<PostsToFavoriteMappingsResultDto> CheckFavouritePostsForUser(@RequestBody FavoritePostsToCheckDto favoritePostsToCheck){
+        var result = favouriteService.checkFavoritePosts(favoritePostsToCheck);
+        return ResponseEntity.ok(result);
+    }
 }
