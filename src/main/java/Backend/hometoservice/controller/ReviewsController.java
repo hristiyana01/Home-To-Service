@@ -27,7 +27,7 @@ public class ReviewsController {
         return review;
     }
     @GetMapping("/get-user-reviews/{reviewedId}")
-    public ResponseEntity<List<Review>> getAllReviews(@PathVariable int reviewedId) {
+    public ResponseEntity<List<Review>> getAllReviews(@PathVariable("reviewedId") int reviewedId) {
         List<Review> userReviews = reviewService.getAllReviewsForUser(reviewedId);
         return ResponseEntity.ok(userReviews);
     }

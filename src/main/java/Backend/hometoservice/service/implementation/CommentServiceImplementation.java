@@ -1,6 +1,6 @@
 package Backend.hometoservice.service.implementation;
 
-import Backend.hometoservice.dto.CreateComment;
+import Backend.hometoservice.dto.CreateCommentDto;
 import Backend.hometoservice.model.Comment;
 import Backend.hometoservice.repository.CommentRepository;
 import Backend.hometoservice.service.CommentService;
@@ -16,11 +16,11 @@ public class CommentServiceImplementation implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public Comment createComment(CreateComment createComment) {
+    public Comment createComment(CreateCommentDto createCommentDto) {
         Comment comment = Comment.builder()
-                .postId(createComment.getPostId())
-                .commentText(createComment.getCommentText())
-                .userId(createComment.getUserId())
+                .postId(createCommentDto.getPostId())
+                .commentText(createCommentDto.getCommentText())
+                .userId(createCommentDto.getUserId())
                 .createdAt(Instant.now())
                 .updatedDate(Instant.now())
                 .build();

@@ -62,4 +62,11 @@ public class Post {
     @OneToMany(mappedBy = "post")
     @JsonBackReference
     private List<Favourites> favourites;
+    @OneToMany(mappedBy = "post")
+    @JsonBackReference
+    private List<Image> images;
+
+//    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonBackReference
+//    private List<Image> images = new ArrayList<>();
 }

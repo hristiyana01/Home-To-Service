@@ -1,11 +1,15 @@
 package Backend.hometoservice.service.implementation;
 
+import Backend.hometoservice.dto.CreateCommentDto;
 import Backend.hometoservice.dto.CreatePostDto;
+import Backend.hometoservice.dto.detailedPost.DetailedPostDto;
+import Backend.hometoservice.dto.detailedPost.DetailedPostResponseDto;
 import Backend.hometoservice.dto.PostDto;
 import Backend.hometoservice.dto.UpdatePostDto;
-import Backend.hometoservice.model.Favourites;
-import Backend.hometoservice.model.Post;
-import Backend.hometoservice.model.User;
+import Backend.hometoservice.dto.detailedPost.SellerDto;
+import Backend.hometoservice.model.*;
+import Backend.hometoservice.repository.CommentRepository;
+import Backend.hometoservice.repository.ImageRepository;
 import Backend.hometoservice.repository.PostRepository;
 import Backend.hometoservice.repository.UserRepository;
 import Backend.hometoservice.service.PostService;
@@ -24,6 +28,8 @@ import java.util.stream.Collectors;
 public class PostServiceImplementation implements PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final ImageRepository imageRepository;
     public Post createPost(CreatePostDto postDto) {
         Post post = Post.builder()
                 .title(postDto.getTitle())
@@ -34,7 +40,14 @@ public class PostServiceImplementation implements PostService {
                 .location(postDto.getLocation())
                 .userId(postDto.getUserId())
                 .phoneNumber(postDto.getPhoneNumber())
+                .images(imageRepository.findAll())
                 .build();
+
+//        if (imageFile != null && !imageFile.isEmpty()) {
+//            byte[] bytes = imageFile.getBytes();
+//            post.setImage(bytes);
+//        }
+
        return postRepository.save(post);
     }
 
@@ -111,11 +124,81 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public Optional<Post> getPostByPostId(Integer postId)  {
-        Optional<Post> post = postRepository.findById(postId);
-//        if(post.isEmpty()) {
-//            throw new NotFoundException("Post with id " + postId + " not found.");
-//        }
-        return post;
+    public DetailedPostResponseDto getDetailedPostData(Integer postId) throws NotFoundException {
+        Optional<Post> postOpt = postRepository.findById(postId);
+        if(postOpt.isEmpty()) {
+            throw new NotFoundException("Post with id " + postId + " not found.");
+        }
+        //zakomentiranata proverka sushto da si q iztestvash da raboti i da ti se kara ako podadesh nevaliten post :)
+        var post = postOpt.get();
+
+        List<Comment> comments = commentRepository.findAllByPostId(postId);
+        List<CreateCommentDto> commentDtos = comments.stream()
+                .map(this::mapToCreateCommentDto)
+                .collect(Collectors.toList());
+        List<Image> images = imageRepository.findAllByPostId(postId);
+
+        User user = userRepository.findById(post.getUserId()).orElseThrow(() -> new NotFoundException("User with id " + post.getUserId() + " not found."));
+        SellerDto sellerDto = mapToSellerDto(user);
+
+
+        DetailedPostResponseDto detailedPostResponseDto = new DetailedPostResponseDto();
+        var detailedPost = new DetailedPostDto();
+        detailedPost.setId(post.getId());
+        detailedPost.setDescription(post.getDescription());
+        detailedPost.setLocation(post.getLocation());
+        detailedPost.setStatus(post.getStatus());
+        detailedPost.setLocation(post.getLocation());
+        detailedPost.setPhoneNumber(post.getPhoneNumber());
+        detailedPost.setCategoryId(post.getCategoryId());
+        detailedPost.setTitle(post.getTitle());
+        detailedPost.setUserId(post.getUserId());
+        detailedPost.setPrice(post.getPrice());
+
+        detailedPostResponseDto.setPost(detailedPost);
+        detailedPostResponseDto.setComments(commentDtos);
+        detailedPostResponseDto.setImages(images);
+        detailedPostResponseDto.setUser(sellerDto);
+
+      //      detailedPostResponseDto.setComments(detailedPo);
+        //it's u now Hrisi u got this, moga i az ppc ako kajesh
+
+        //kum tova api trqbva da dobavim
+        //commentari
+        //reviews
+        //oshte kakvoto iskash za detailnoto view za posta
+
+        //nov obekt koito da izkarva vajnata informaciq za post-a ->DetailedPOstDto
+        // -> koi potrebitel q e suzdal naprimer osven ako ne e protiv GDPR
+
+        //tochno taka ama v tozi service tuk deto pisha v momenta trqbva da se sluchi tova
+        // slivane, za da se vurne cqlata informaciq kum FrontEnda
+        // moje bi direktno repotata , ne servizite. Kato cqlo toq pattern koito polzvash -> service->repo e legacy i e obsolete i ne se polzva veche
+
+
+        //1. suzdai si purvo modela koito iskash da vrushtash kato danni kum frontenda
+        //2. namapni dannite ot posta
+        //3. dobavi dannite za suzdatelq na posta
+        //4. dobavi dannite za reviews
+        //5. dobavi commentarite kum posta
+        //6. kvoto dr ima  go dobawi ne ti  tablicite gi imash prosto trqbva da gi sleesh v 1 rezultat
+        return detailedPostResponseDto;
+    }
+    private CreateCommentDto mapToCreateCommentDto(Comment comment) {
+        return CreateCommentDto.builder()
+                .postId(comment.getPostId())
+                .commentText(comment.getCommentText())
+                .userId(comment.getUserId())
+                .build();
+    }
+    private SellerDto mapToSellerDto(User user) {
+        // Assuming SellerDto has the same fields as User
+        return SellerDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .phone(user.getPhone())
+                .country(user.getCountry())
+                // add other fields as necessary
+                .build();
     }
 }

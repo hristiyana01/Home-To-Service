@@ -8,9 +8,10 @@ import HomePage from "./HomePage";
 import ContactsPage from "./ContactsPage";
 import CategoriesList from "./CategoriesList";
 import PostsForCategory from "./PostsForCategory";
+import DetailedPostView from "./DetailedPostView";
 //import AllPostsPage from "./AllPostsPage";
 
-const defaultUser = {'userId': 1, 'userType': 'admin', 'username': 'MyUser'};
+const defaultUser = {'id': 1, 'userType': 'admin', 'username': 'MyUser'};
 export const UserContext = createContext(null);
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
   function login(response){
     setUser(response.user);
   }
-
+    // images upload - https://www.youtube.com/watch?v=3f5Q9wDePzY
   return (
     <UserContext.Provider value={{user, login}}>
     <Router>
@@ -35,6 +36,8 @@ function App() {
             <Route path="contacts" element={<ContactsPage />} />
             <Route path="/categories-list" element={<CategoriesList />} />
             <Route path="/posts/category/:categoryId" element={<PostsForCategory />} />
+            <Route path="/posts/:postId" element={<DetailedPostView />} />
+
             {/*<Route path="/all-posts" element={<AllPostsPage />} />*/}
           </Routes>
         </header>

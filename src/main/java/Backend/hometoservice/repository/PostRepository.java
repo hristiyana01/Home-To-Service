@@ -1,5 +1,6 @@
 package Backend.hometoservice.repository;
 
+import Backend.hometoservice.enums.Status;
 import Backend.hometoservice.model.Post;
 import Backend.hometoservice.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,5 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Optional<List<Post>> findPostsByUserId(Integer userId);
 
     Optional<List<Post>> findPostsByCategoryId(Integer categoryId);
+    List<Post> findAllByUserIdAndStatus(Integer userId, Status status);
 }

@@ -1,9 +1,11 @@
 package Backend.hometoservice.controller;
 
+import Backend.hometoservice.dto.detailedPost.DetailedPostResponseDto;
 import Backend.hometoservice.dto.CreatePostDto;
 import Backend.hometoservice.dto.PostDto;
 import Backend.hometoservice.dto.UpdatePostDto;
 import Backend.hometoservice.model.Post;
+import Backend.hometoservice.service.ImageService;
 import Backend.hometoservice.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import javassist.NotFoundException;
@@ -17,11 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/post")
 @AllArgsConstructor
 @RestController
+@RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final ImageService imageService;
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody CreatePostDto createPostDto) {
         Post post = postService.createPost(createPostDto);
@@ -54,9 +57,9 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
     @Operation(summary= "Gets post by ID")
-    @GetMapping("/get/{postId}")
-    public ResponseEntity<Optional<Post>> getPostById(@PathVariable Integer postId)  {
-        Optional<Post> post = postService.getPostByPostId(postId);
+    @GetMapping("/{postId}")
+    public ResponseEntity<DetailedPostResponseDto> getPostById(@PathVariable Integer postId) throws NotFoundException {
+        DetailedPostResponseDto post = postService.getDetailedPostData(postId);
         return ResponseEntity.ok().body(post);
     }
 //    @PutMapping("/add-photos")

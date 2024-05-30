@@ -1,16 +1,13 @@
 package Backend.hometoservice.controller;
 
 
-import Backend.hometoservice.dto.CreateComment;
+import Backend.hometoservice.dto.CreateCommentDto;
 import Backend.hometoservice.dto.UpdateCommentDto;
 import Backend.hometoservice.model.Comment;
-import Backend.hometoservice.repository.CommentRepository;
 import Backend.hometoservice.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/comment")
@@ -18,8 +15,8 @@ import java.util.Optional;
 public class CommentController {
     private final CommentService commentService;
     @PostMapping("/create")
-    public ResponseEntity<Comment> createComment(@RequestBody CreateComment createComment) {
-        Comment comment = commentService.createComment(createComment);
+    public ResponseEntity<Comment> createComment(@RequestBody CreateCommentDto createCommentDto) {
+        Comment comment = commentService.createComment(createCommentDto);
         return ResponseEntity.ok(comment);
     }
     @PutMapping("/edit/{commentId}")

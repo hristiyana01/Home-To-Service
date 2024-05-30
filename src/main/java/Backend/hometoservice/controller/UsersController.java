@@ -36,7 +36,7 @@ public class UsersController {
         return ResponseEntity.ok().body(updateUser);
     }
     @GetMapping("/get/{id}")
-    public Optional<User> getUserById(@PathVariable Integer id) {
+    public Optional<User> getUserById(@PathVariable("id") Integer id) {
         return userService.getUserById(id);
     }
     @GetMapping("/getAll")

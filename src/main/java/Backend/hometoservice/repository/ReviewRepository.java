@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Optional<List<Review>> findAllByReviewedId(int reviewedId);
+    List<Review> findAllByReviewedId(Integer userId);
 }

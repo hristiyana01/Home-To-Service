@@ -1,4 +1,4 @@
-package Backend.hometoservice.dto;
+package Backend.hometoservice.dto.detailedPost;
 
 import Backend.hometoservice.enums.Status;
 import lombok.AllArgsConstructor;
@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class PostDto {
+public class DetailedPostDto {
+
     private Integer id;
     private String title;
     private String description;
@@ -24,4 +24,6 @@ public class PostDto {
     private String phoneNumber;
     private Instant createdDate;
     private Double price;
+
+    //todo: dobavi si ostanalite danni (koloni) ot posta
 }

@@ -1,6 +1,7 @@
 package Backend.hometoservice.service;
 
 import Backend.hometoservice.dto.CreatePostDto;
+import Backend.hometoservice.dto.detailedPost.DetailedPostResponseDto;
 import Backend.hometoservice.dto.PostDto;
 import Backend.hometoservice.dto.UpdatePostDto;
 import Backend.hometoservice.model.Post;
@@ -19,5 +20,5 @@ public interface PostService {
     List<PostDto> findAllPosts();
 
     List<Post> findAllPostsByCategoryId(Integer categoryId);
-    Optional<Post> getPostByPostId(Integer postId);
+    DetailedPostResponseDto getDetailedPostData(Integer postId) throws NotFoundException;
 }

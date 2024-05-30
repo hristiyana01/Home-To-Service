@@ -54,6 +54,11 @@
     padding: 20px;
     margin-bottom: 20px;
 }
+.post:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
 
 .post-image {
     width: 150px;
