@@ -7,17 +7,12 @@ import Backend.hometoservice.service.ReviewService;
 //import jakarta.validation.ConstraintViolation;
 //import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.validation.Validator;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Service
 @AllArgsConstructor

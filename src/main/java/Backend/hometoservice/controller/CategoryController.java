@@ -3,7 +3,6 @@ package Backend.hometoservice.controller;
 import Backend.hometoservice.dto.CategoryDto;
 import Backend.hometoservice.model.Category;
 import Backend.hometoservice.service.CategoryService;
-import io.swagger.models.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;

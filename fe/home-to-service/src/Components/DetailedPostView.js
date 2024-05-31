@@ -17,17 +17,20 @@ function DetaileldPostView() {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/post/${postId}`);
-        let post = response.data;
+        let postdata = response.data;
+        console.log(postdata);
 
-        const commentsForPostsResp = await axios.post('http://localhost:8080/favourites/check-favourite-posts-for-user',
-          {userId: user.id, postsToCheck: response.data.map(post => post.id)});
+        const favoritePostMappings = await axios.post(`http://localhost:8080/favourites/check-favourite-posts-for-user`,
+          {userId: user.id, postsToCheck: [postId]});
 
-        const date = new Date(post.createdDate);
-        post.formattedDate = date.toLocaleDateString();
+        console.log(favoritePostMappings);
+
+        const date = new Date(postdata.createdDate);
+        postdata.formattedDate = date.toLocaleDateString();
         post.formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 
-        setPost(post);
-        setIsFavorite(commentsForPostsResp.data.favoritePostsMappings[post.id]);
+        setPost(postdata);
+        setIsFavorite(favoritePostMappings.data.favoritePostsMappings[post.id]);
       } catch (error) {
         console.error('There was an error!', error);
       }

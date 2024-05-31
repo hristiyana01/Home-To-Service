@@ -58,7 +58,7 @@ public class PostController {
     }
     @Operation(summary= "Gets post by ID")
     @GetMapping("/{postId}")
-    public ResponseEntity<DetailedPostResponseDto> getPostById(@PathVariable Integer postId) throws NotFoundException {
+    public ResponseEntity<DetailedPostResponseDto> getDetailedPostDataByPostId(@PathVariable Integer postId) throws NotFoundException {
         DetailedPostResponseDto post = postService.getDetailedPostData(postId);
         return ResponseEntity.ok().body(post);
     }
