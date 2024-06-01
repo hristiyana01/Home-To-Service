@@ -5,7 +5,6 @@ import Backend.hometoservice.model.Category;
 import javassist.NotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CategoryService {
     Category addCategory(CategoryDto categoryDto);

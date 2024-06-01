@@ -1,5 +1,6 @@
 package Backend.hometoservice.model;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,15 +8,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "refresh_token")
+public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "name")
-    private String name;
+    public Integer id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
+    public User user;
+
+    @Column(name = "token", unique = true)
+    public String token;
 }

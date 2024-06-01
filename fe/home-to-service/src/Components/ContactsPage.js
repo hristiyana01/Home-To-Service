@@ -12,8 +12,8 @@ function ContactsPage() {
         <Navbar.Brand href="#home">
           <img
             src={contactImage}
-            width="30"
-            height="30"
+            width="10"
+            height="10"
             className="d-inline-block align-top"
             alt="Logo"
           />

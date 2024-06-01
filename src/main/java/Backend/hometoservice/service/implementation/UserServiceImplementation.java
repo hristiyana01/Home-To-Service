@@ -5,10 +5,11 @@ import Backend.hometoservice.dto.CreateReviewDto;
 import Backend.hometoservice.dto.PostDto;
 import Backend.hometoservice.dto.UserDto;
 //import Backend.hometoservice.model.Role;
+import Backend.hometoservice.dto.detailedPost.DetailedPostDto;
+import Backend.hometoservice.dto.detailedPost.DetailedPostResponseDto;
 import Backend.hometoservice.dto.detailedUserDto.DetailedUserDto;
 import Backend.hometoservice.dto.detailedUserDto.DetailedUserResponseDto;
 import Backend.hometoservice.enums.Status;
-import Backend.hometoservice.model.Comment;
 import Backend.hometoservice.model.Post;
 import Backend.hometoservice.model.Review;
 import Backend.hometoservice.model.User;
@@ -16,20 +17,19 @@ import Backend.hometoservice.model.User;
 import Backend.hometoservice.repository.PostRepository;
 import Backend.hometoservice.repository.ReviewRepository;
 import Backend.hometoservice.repository.UserRepository;
+import Backend.hometoservice.service.UserService;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImplementation implements Backend.hometoservice.service.UserService {
+public class UserServiceImplementation implements UserService {
     private final UserRepository userRepository;
    // private final RolesRepository rolesRepository;
     private final PostRepository postRepository;
@@ -91,8 +91,7 @@ public class UserServiceImplementation implements Backend.hometoservice.service.
     }
     @Override
     public Optional<User> getUserById(Integer userId) {
-        Optional<User> user = userRepository.findById(userId);
-        return user;
+        return userRepository.findById(userId);
     }
 
     @Override
@@ -100,7 +99,7 @@ public class UserServiceImplementation implements Backend.hometoservice.service.
         return userRepository.findAll();
     }
     @Override
-    public DetailedUserDto getUserDetails(Integer userId) throws NotFoundException {
+    public DetailedUserResponseDto getUserDetails(Integer userId) throws NotFoundException {
         Optional<User> userOpt = userRepository.findById(userId);
         if(userOpt.isEmpty()) {
             throw new NotFoundException("User with id " + userId + " not found.");
@@ -111,31 +110,29 @@ public class UserServiceImplementation implements Backend.hometoservice.service.
         List<Post> posts = postRepository.findAllByUserIdAndStatus(userId, Status.ACTIVE);
 
         DetailedUserResponseDto detailedUserResponseDto = new DetailedUserResponseDto();
+        var detailedUser = new DetailedUserDto();
 
-        DetailedUserDto detailedUserDto = new DetailedUserDto();
-        detailedUserDto.setEmail(user.getEmail());
-        detailedUserDto.setUsername(user.getUsername());
-        detailedUserDto.setName(user.getName());
-        detailedUserDto.setSurname(user.getSurname());
-        detailedUserDto.setPhone(user.getPhone());
-        detailedUserDto.setLocation(user.getLocation());
-        detailedUserDto.setCity(user.getCity());
-        detailedUserDto.setZip(user.getZip());
-
+        detailedUser.setEmail(user.getEmail());
+        detailedUser.setUsername(user.getUsername());
+        detailedUser.setName(user.getName());
+        detailedUser.setSurname(user.getSurname());
+        detailedUser.setPhone(user.getPhone());
+        detailedUser.setLocation(user.getLocation());
+        detailedUser.setCity(user.getCity());
+        detailedUser.setZip(user.getZip());
 
         List<CreateReviewDto> reviewDtos = reviews.stream()
                 .map(this::mapToCreateReviewDto)
                 .collect(Collectors.toList());
 
-        detailedUserResponseDto.setReviews(reviewDtos);
-
         List<PostDto> postDtos = posts.stream()
                 .map(this::mapToPostDto)
                 .collect(Collectors.toList());
 
+        detailedUserResponseDto.setReviews(reviewDtos);
         detailedUserResponseDto.setPosts(postDtos);
 
-        return detailedUserDto;
+        return detailedUserResponseDto;
     }
 
     private CreateReviewDto mapToCreateReviewDto(Review review) {
@@ -160,5 +157,20 @@ public class UserServiceImplementation implements Backend.hometoservice.service.
                 .createdDate(post.getCreatedDate())
                 .build();
     }
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        Optional<User> user = userRepository.findByUsername(username);
+//        if (!user.isPresent()) {
+//            throw new UsernameNotFoundException("User not found");
+//        }
+//
+//        User foundUser = user.get();
+//
+//        return org.springframework.security.core.userdetails.User
+//                .withUsername(foundUser.getUsername())
+//                .password(foundUser.getPassword())
+//                .roles(foundUser.getRole())
+//                .build();
+//    }
 
 }

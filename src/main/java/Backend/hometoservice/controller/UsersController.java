@@ -1,8 +1,12 @@
 package Backend.hometoservice.controller;
 
 import Backend.hometoservice.dto.UserDto;
+import Backend.hometoservice.dto.detailedPost.DetailedPostResponseDto;
+import Backend.hometoservice.dto.detailedUserDto.DetailedUserResponseDto;
 import Backend.hometoservice.model.User;
 import Backend.hometoservice.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/user")
 @AllArgsConstructor
 @RestController
 public class UsersController {
@@ -44,5 +48,10 @@ public class UsersController {
         var users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
-
+    @Operation(summary= "Gets post by ID")
+    @GetMapping("/{userId}")
+    public ResponseEntity<DetailedUserResponseDto> getDetailedUserDataByUserId(@PathVariable Integer userId) throws NotFoundException {
+        DetailedUserResponseDto user = userService.getUserDetails(userId);
+        return ResponseEntity.ok().body(user);
+    }
 }

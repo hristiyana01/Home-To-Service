@@ -12,24 +12,28 @@ function DetaileldPostView() {
   const { user } = useContext(UserContext);
   const [post, setPost] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
-
+  //trqbva da gi prisvoish kato state gore dannite ot 2te zaqvki 
+  //tuk pazish dannite ot zaqvkite
+  //tvoq post durji mnogo danni i trqbva da gi renderirash 
+  //nov component ako iskash da preizpolzvash Favorite logikata i da e spodelena !
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/post/${postId}`);
         let postdata = response.data;
         console.log(postdata);
-
+        
         const favoritePostMappings = await axios.post(`http://localhost:8080/favourites/check-favourite-posts-for-user`,
           {userId: user.id, postsToCheck: [postId]});
-
+        
         console.log(favoritePostMappings);
 
-        const date = new Date(postdata.createdDate);
-        postdata.formattedDate = date.toLocaleDateString();
-        post.formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+        const date = new Date(postdata.post.createdDate);
+        postdata.post.formattedDate = date.toLocaleDateString();
+        postdata.post.formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 
-        setPost(postdata);
+        setPost(postdata.post);
         setIsFavorite(favoritePostMappings.data.favoritePostsMappings[post.id]);
       } catch (error) {
         console.error('There was an error!', error);
@@ -39,7 +43,8 @@ function DetaileldPostView() {
     fetchPosts();
   }, [postId]);
 
-  const handleFavouriteIconClick = async () => {
+  const handleFavouriteIconClick = async (e) => {
+    e.stopPropagation();
     try {
       const response = await axios.post('http://localhost:8080/favourites/toggle', {
         userId: user.id,
@@ -50,9 +55,8 @@ function DetaileldPostView() {
     } catch (error) {
       console.error('There was an error!', error);
     }
-  };
-  //prosto ne si pisala fe za towa mislish taka, ne che i realen backend si pisala :D
-  //.... :P
+  };  
+  
   if(!post) return 'Loading...';
 
   return (
@@ -69,8 +73,8 @@ function DetaileldPostView() {
         <div className="post-heart-container">
           {
             isFavorite || false ?
-              (<FontAwesomeIcon onClick={() => handleFavouriteIconClick()} icon={solidHeart} />)
-              : (<FontAwesomeIcon onClick={()=> handleFavouriteIconClick()} icon={faHeart} />)
+              (<FontAwesomeIcon onClick={handleFavouriteIconClick} icon={solidHeart} />)
+              : (<FontAwesomeIcon onClick={handleFavouriteIconClick} icon={faHeart} />)
           }
         </div>
         <div>

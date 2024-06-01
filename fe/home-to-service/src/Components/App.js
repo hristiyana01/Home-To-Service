@@ -9,6 +9,7 @@ import ContactsPage from "./ContactsPage";
 import CategoriesList from "./CategoriesList";
 import PostsForCategory from "./PostsForCategory";
 import DetailedPostView from "./DetailedPostView";
+import Login from './Login';
 //import AllPostsPage from "./AllPostsPage";
 
 const defaultUser = {'id': 1, 'userType': 'admin', 'username': 'MyUser'};
@@ -37,10 +38,12 @@ function App() {
             <Route path="/categories-list" element={<CategoriesList />} />
             <Route path="/posts/category/:categoryId" element={<PostsForCategory />} />
             <Route path="/posts/:postId" element={<DetailedPostView />} />
-
+            <Route path="/login" element={<Login />} />
+          
             {/*<Route path="/all-posts" element={<AllPostsPage />} />*/}
           </Routes>
         </header>
+        <CategoriesList></CategoriesList>
         <Footer />
       </div>
     </Router>
