@@ -1,4 +1,4 @@
-package Backend.hometoservice;
+package Backend.hometoservice.config;
 
 public class AuthRequest {
     private String username;

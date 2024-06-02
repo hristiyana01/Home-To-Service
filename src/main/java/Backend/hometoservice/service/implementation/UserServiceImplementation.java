@@ -48,6 +48,7 @@ public class UserServiceImplementation implements UserService {
                 .address(userDto.getAddress())
                 .location(userDto.getLocation())
                 .registeredDate(Instant.now())
+                .registeredDate(Instant.now()) //adding registered date
                 .updatedDate(Instant.now())
                 .build();
 

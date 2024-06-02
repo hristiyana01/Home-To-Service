@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Container } from 'react-bootstrap';
 
@@ -15,19 +15,20 @@ function CreatePostPage() {
   const [userId, setUserId] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
 
   const [categories, setCategories] = useState([]);
   const validStatuses = ["ACTIVE", "INACTIVE", "SOLD", "EXPIRED"];
   const statusOptions = [...validStatuses];
-  statusOptions.unshift("Select Status")
+  statusOptions.unshift("Select Status");
 
-
-  //Init Categories
+  // Init Categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get('http://localhost:8080/category/getAll');
-        response.data.unshift({id: -1, name: "Select Category"})
+        response.data.unshift({ id: -1, name: "Select Category" });
         setCategories(response.data);
         setCategoryId(-1);
       } catch (error) {
@@ -37,6 +38,29 @@ function CreatePostPage() {
 
     fetchCategories();
   }, []);
+
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const uploadImage = async () => {
+    if (!image) return null;
+    
+    const formData = new FormData();
+    formData.append('file', image);
+    
+    try {
+      const response = await axios.post('http://localhost:8080/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data.url; // Assuming your backend returns the URL of the uploaded image
+    } catch (error) {
+      console.error('There was an error uploading the image!', error);
+      return null;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,6 +75,8 @@ function CreatePostPage() {
       return;
     }
 
+    const uploadedImageUrl = await uploadImage();
+
     const post = {
       title,
       description,
@@ -58,7 +84,8 @@ function CreatePostPage() {
       location,
       categoryId,
       userId,
-      phoneNumber
+      phoneNumber,
+      imageUrl: uploadedImageUrl,
     };
 
     try {
@@ -114,6 +141,11 @@ function CreatePostPage() {
         <Form.Group controlId="formPhoneNumber">
           <Form.Label>Phone Number</Form.Label>
           <Form.Control type="text" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+        </Form.Group>
+
+        <Form.Group controlId="formImage">
+          <Form.Label>Upload Image</Form.Label>
+          <Form.Control type="file" onChange={handleFileChange} />
         </Form.Group>
 
         <Button variant="primary" type="submit">

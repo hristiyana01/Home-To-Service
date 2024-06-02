@@ -1,0 +1,53 @@
+/* src/Components/AllPostsPage.css */
+
+.category-posts-main {
+    padding: 20px;
+  }
+  
+  .post-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .post-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+  }
+  
+  .post {
+    display: flex;
+    align-items: center;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .post-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 20px;
+  }
+  
+  .post-details {
+    flex: 1;
+  }
+  
+  .post-price {
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  .post-description {
+    margin-top: 10px;
+  }
+  
+  .post-heart-container {
+    cursor: pointer;
+  }
+  

@@ -25,5 +25,4 @@ public class DetailedPostDto {
     private Instant createdDate;
     private Double price;
 
-    //todo: dobavi si ostanalite danni (koloni) ot posta
 }

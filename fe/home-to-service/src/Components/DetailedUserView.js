@@ -22,7 +22,7 @@ export default function UserDetailsPage() {
 
     const fetchUserPosts = async () => {
       try {
-        const response = await axios.get(`/post/user/${postId}`);
+        const response = await axios.get(`/post/user/${userId}`);
         setUserPosts(response.data);
       } catch (error) {
         console.error('Error fetching user posts:', error);
@@ -51,6 +51,11 @@ export default function UserDetailsPage() {
       <div>
         <h2>{userDetails.name}</h2>
         <p>Email: {userDetails.email}</p>
+        <p>Email: {userDetails.name}</p>
+        <p>Email: {userDetails.surname}</p>
+        <p>Email: {userDetails.username}</p>
+        <p>Reviews: {userDetails.review}</p>
+        <p>Post created by this user: {userDetails.userPosts}</p>
         {/* Add more user details here */}
       </div>
       <div>

@@ -1,10 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {UserContext} from "./App";
+
 export default PostOverview;
 
 function PostOverview({ post }) {
@@ -16,8 +17,6 @@ function PostOverview({ post }) {
   const formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 
   const handleFavouriteIconClick = async (e) => {
-    console.log("ALO");
-    console.log(e);
     e.stopPropagation();
     try {
       const response = await axios.post('http://localhost:8080/favourites/toggle', {

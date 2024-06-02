@@ -21,8 +21,17 @@ public class ImageController {
     private final ImageService imageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile[] files,
+    public ResponseEntity<?> uploadImages(@RequestParam("images") MultipartFile[] files,
                                          @RequestParam("postId") Integer postId) throws IOException {
+        String uploadImage = imageService.uploadImage(files, postId);
+        return ResponseEntity.status(HttpStatus.OK).body(uploadImage);
+    }
+
+    @PostMapping("/upload-one")
+    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file,
+                                         @RequestParam("postId") Integer postId) throws IOException {
+        var files = new MultipartFile[1];
+        files[0] = file;
         String uploadImage = imageService.uploadImage(files, postId);
         return ResponseEntity.status(HttpStatus.OK).body(uploadImage);
     }

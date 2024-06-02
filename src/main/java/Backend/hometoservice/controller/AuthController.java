@@ -62,9 +62,16 @@ package Backend.hometoservice.controller;////package Backend.hometoservice.contr
 //    }
 //}
 //
-import Backend.hometoservice.AuthRequest;
+import Backend.hometoservice.authorization.dto.LoginRequest;
+import Backend.hometoservice.config.AuthRequest;
+import Backend.hometoservice.dto.AuthenticationResponseDto;
+import Backend.hometoservice.dto.JwtTokenDto;
+import Backend.hometoservice.dto.UserDto;
+import Backend.hometoservice.model.Role;
 import Backend.hometoservice.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -72,8 +79,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     @Autowired
@@ -83,7 +94,7 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequest authRequest) {
+    public String login(@RequestBody AuthRequest authRequest) throws GeneralSecurityException, IOException {
 
         try {
             Authentication authentication = authenticationManager.authenticate(
@@ -96,4 +107,14 @@ public class AuthController {
             return "Login failed: " + e.getMessage();
         }
     }
+
+//    @PostMapping("/registration")
+//    public ResponseEntity<AuthenticationResponseDto> register(@RequestBody UserDto userDto, LoginRequest loginRequestRoleType) {
+//        return ResponseEntity.ok(authenticationService.register(userDto, loginRequestRoleType));
+//    }
+//
+//    @PostMapping("/authentication")
+//    public ResponseEntity<AuthenticationResponseDto> authenticate(@RequestBody UserDto userDto, LoginRequest loginRequestRoleType) {
+//        return ResponseEntity.ok(authenticationService.authenticate(userDto, loginRequestRoleType));
+//    }
 }

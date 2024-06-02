@@ -25,6 +25,7 @@ import java.util.Optional;
 public class PostController {
     private final PostService postService;
     private final ImageService imageService;
+
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody CreatePostDto createPostDto) {
         Post post = postService.createPost(createPostDto);

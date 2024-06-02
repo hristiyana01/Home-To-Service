@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class DetailedPostResponseDto {
     DetailedPostDto post;
-    List<CreateCommentDto> comments;
+    List<PostCommentDto> comments;
     SellerDto user;
     List<Image> images;
 }

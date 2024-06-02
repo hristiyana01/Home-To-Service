@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 import PostOverview from "./PostOverview";
 import {UserContext} from "./App";
 
@@ -8,6 +8,7 @@ function PostsForCategory() {
   const [posts, setPosts] = useState([]);
   const { categoryId } = useParams();
   const { user } = useContext(UserContext);
+  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -15,15 +16,18 @@ function PostsForCategory() {
         const response = await axios.get(`http://localhost:8080/post/all/${categoryId}`);
         let posts = response.data;
 
-        const commentsForPostsResp = await axios.post('http://localhost:8080/favourites/check-favourite-posts-for-user',
+        const favoritesForPostsResp = await axios.post('http://localhost:8080/favourites/check-favourite-posts-for-user',
           {userId: user.id, postsToCheck: response.data.map(post => post.id)});
 
-        let commentsForPosts = commentsForPostsResp.data.favoritePostsMappings;
+        let favoritePostsMappings = favoritesForPostsResp.data.favoritePostsMappings;
         posts.map(post => {
-          post.isFavorite = commentsForPosts[post.id];
+          post.isFavorite = favoritePostsMappings[post.id];
         });
 
+        const categoryResponse = await axios.get(`http://localhost:8080/category/get/${categoryId}`);
+        
         setPosts(posts);
+        setCategory(categoryResponse.data);
       } catch (error) {
         console.error('There was an error!', error);
       }
@@ -35,7 +39,7 @@ function PostsForCategory() {
 
   return (
     <div className="category-posts-main">
-      <h1>All Post Listings for Category {categoryId}</h1>
+      {category && <h1>All Posts for {category.name} Category</h1>}
       {posts.map(post => <PostOverview key={post.id} post={post} />)}
     </div>
   );

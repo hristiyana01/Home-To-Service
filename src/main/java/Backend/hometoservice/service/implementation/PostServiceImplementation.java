@@ -6,6 +6,7 @@ import Backend.hometoservice.dto.detailedPost.DetailedPostDto;
 import Backend.hometoservice.dto.detailedPost.DetailedPostResponseDto;
 import Backend.hometoservice.dto.PostDto;
 import Backend.hometoservice.dto.UpdatePostDto;
+import Backend.hometoservice.dto.detailedPost.PostCommentDto;
 import Backend.hometoservice.dto.detailedPost.SellerDto;
 import Backend.hometoservice.model.*;
 import Backend.hometoservice.repository.CommentRepository;
@@ -18,9 +19,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +29,7 @@ public class PostServiceImplementation implements PostService {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final ImageRepository imageRepository;
+
     public Post createPost(CreatePostDto postDto) {
         Post post = Post.builder()
                 .title(postDto.getTitle())
@@ -41,6 +41,7 @@ public class PostServiceImplementation implements PostService {
                 .userId(postDto.getUserId())
                 .phoneNumber(postDto.getPhoneNumber())
                 .images(imageRepository.findAll())
+                .createdDate(Instant.now())
                 .build();
 
 //        if (imageFile != null && !imageFile.isEmpty()) {
@@ -129,12 +130,19 @@ public class PostServiceImplementation implements PostService {
         if(postOpt.isEmpty()) {
             throw new NotFoundException("Post with id " + postId + " not found.");
         }
-        //zakomentiranata proverka sushto da si q iztestvash da raboti i da ti se kara ako podadesh nevaliten post :)
         var post = postOpt.get();
 
         List<Comment> comments = commentRepository.findAllByPostId(postId);
-        List<CreateCommentDto> commentDtos = comments.stream()
-                .map(this::mapToCreateCommentDto)
+        List<Integer> allCommentsUsers = comments.stream().map(c -> c.getUserId())
+                .distinct().collect(Collectors.toList());
+
+        List<User> users = userRepository.findAllById(allCommentsUsers);
+
+        Map<Integer, String> usernamesById = users.stream()
+                .collect(Collectors.toMap(User::getId, User::getUsername));
+
+        List<PostCommentDto> commentDtos = comments.stream()
+                .map(c -> mapToPostCommentDto(c, usernamesById))
                 .collect(Collectors.toList());
         List<Image> images = imageRepository.findAllByPostId(postId);
 
@@ -184,21 +192,23 @@ public class PostServiceImplementation implements PostService {
         //6. kvoto dr ima  go dobawi ne ti  tablicite gi imash prosto trqbva da gi sleesh v 1 rezultat
         return detailedPostResponseDto;
     }
-    private CreateCommentDto mapToCreateCommentDto(Comment comment) {
-        return CreateCommentDto.builder()
-                .postId(comment.getPostId())
-                .commentText(comment.getCommentText())
+
+    private PostCommentDto mapToPostCommentDto(Comment comment, Map<Integer, String> usernamesById) {
+        return PostCommentDto.builder()
+                .id(comment.getId())
+                .text(comment.getCommentText())
                 .userId(comment.getUserId())
+                .username(usernamesById.get(comment.getUserId()))
+                .commentDate(comment.getCreatedAt())
                 .build();
     }
+
     private SellerDto mapToSellerDto(User user) {
-        // Assuming SellerDto has the same fields as User
         return SellerDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .phone(user.getPhone())
                 .country(user.getCountry())
-                // add other fields as necessary
                 .build();
     }
 }

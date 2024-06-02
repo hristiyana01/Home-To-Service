@@ -2,12 +2,15 @@ package Backend.hometoservice.service.implementation;
 
 import Backend.hometoservice.dto.CreateCommentDto;
 import Backend.hometoservice.model.Comment;
+import Backend.hometoservice.model.Post;
 import Backend.hometoservice.repository.CommentRepository;
 import Backend.hometoservice.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,5 +52,25 @@ public class CommentServiceImplementation implements CommentService {
         comment.setUpdatedDate(Instant.now());
         commentRepository.save(comment);
         return comment;
+    }
+
+    @Override
+    public Optional<Comment> getCommentById(Integer commentId) {
+        return commentRepository.findById(commentId);
+    }
+
+    @Override
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
+    }
+
+    @Override
+    public List<Comment> getPostsComments(Integer postId) {
+        Optional<List<Comment>> postCommentsOptional = commentRepository.findCommentsByPostId(postId);
+        if(postCommentsOptional.isEmpty()) {
+            return new ArrayList<Comment>();
+        }
+
+        return postCommentsOptional.get();
     }
 }
