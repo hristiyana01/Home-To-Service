@@ -51,6 +51,7 @@ public class ImageServiceImpl implements ImageService {
             image.setFilePath(dest.getAbsolutePath());
             image.setOriginalFilename(originalFilename);
             imageRepository.save(image);
+
         }
 
         return "Image uploaded successfully";

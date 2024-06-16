@@ -65,7 +65,7 @@ public class PostServiceImpl implements PostService {
         List<String> imageFilePaths = imageRepository.findAllByPostId(post.getId())
                 .stream()
                 .map(Image::getFilePath)
-                .collect(Collectors.toList());
+                .toList();
 
         PostDto postDto = new PostDto();
         postDto.setId(post.getId());
@@ -109,7 +109,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post updatePost(Integer postId, UpdatePostDto updatePostDto) throws NotFoundException {
         Optional<Post> postOptional = postRepository.findById(postId);
-        if (!postOptional.isPresent()) {
+        if (postOptional.isEmpty()) {
             throw new NotFoundException("Post not found with id: " + postId);
         }
 
@@ -136,7 +136,7 @@ public class PostServiceImpl implements PostService {
             post.setLocation(updatePostDto.getLocation());
         }
 
-        post.setCategoryId(Integer.parseInt(updatePostDto.getCategoryId()));
+        post.setCategoryId(updatePostDto.getCategoryId());
 
         // Save the updated post
         return postRepository.save(post);

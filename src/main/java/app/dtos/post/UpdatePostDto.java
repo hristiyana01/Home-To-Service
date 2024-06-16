@@ -14,5 +14,5 @@ public class UpdatePostDto {
     private Double price;
     private String status;
     private String location;
-    private String categoryId;
+    private Integer categoryId;
 }

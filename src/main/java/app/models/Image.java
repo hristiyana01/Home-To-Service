@@ -21,9 +21,9 @@ public class Image {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(nullable = false)
+    @Column(name = "file_path", nullable = false)
     private String filePath;
 
-    @Column(nullable = false)
+    @Column(name = "original_file_name", nullable = false)
     private String originalFilename;
 }
