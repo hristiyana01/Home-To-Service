@@ -33,4 +33,5 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> getCategory(@PathVariable Integer categoryId) throws NotFoundException {
         CategoryDto category = categoryService.getById(categoryId);
         return ResponseEntity.ok(category);
-    }}
+    }
+}

@@ -64,17 +64,19 @@ export default function PostOverview({ post }: any) {
         </Link>
         <div className="post-overview-rightside">
           <div className="post-heart-container">
-            {isFavorite || false ? (
-              <FontAwesomeIcon
-                onClick={handleFavouriteIconClick}
-                icon={solidHeart}
-              />
-            ) : (
-              <FontAwesomeIcon
-                onClick={handleFavouriteIconClick}
-                icon={faHeart}
-              />
-            )}
+            {userStore.userId ? (
+              isFavorite ? (
+                <FontAwesomeIcon
+                  onClick={handleFavouriteIconClick}
+                  icon={solidHeart}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  onClick={handleFavouriteIconClick}
+                  icon={faHeart}
+                />
+              )
+            ) : null}
           </div>
           <p className="post-price">
             <FontAwesomeIcon icon={faCoins} /> {post.price} BGN

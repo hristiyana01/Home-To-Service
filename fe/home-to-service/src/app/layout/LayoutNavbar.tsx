@@ -3,7 +3,7 @@ import { useStore } from "../stores/stores";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 
 export default function LayoutNavbar() {
   const navigation = useNavigate();
@@ -54,6 +54,10 @@ export default function LayoutNavbar() {
 
                 <Nav.Link className="mx-2" href="/profile">
                   <FontAwesomeIcon icon={faUser} />
+                </Nav.Link>
+
+                <Nav.Link className="mx-2" href="/user/favorites">
+                  <FontAwesomeIcon icon={faHeart} />
                 </Nav.Link>
               </>
             ) : (

@@ -19,9 +19,9 @@ public class ReviewsController {
     private final ReviewService reviewService;
 
     @PostMapping("/create")
-    public Review createReview(@RequestBody CreateReviewDto reviewDto) {
+    public ResponseEntity<Review> createReview(@RequestBody CreateReviewDto reviewDto) {
         Review review = reviewService.createReview(reviewDto);
-        return review;
+        return ResponseEntity.ok(review);
     }
 
     @GetMapping("/{userId}")
@@ -29,10 +29,4 @@ public class ReviewsController {
         List<ReviewDto> reviews = reviewService.getUserReviews(userId);
         return ResponseEntity.ok(reviews);
     }
-
-//    @GetMapping("/get-user-reviews/{reviewedId}")
-//    public ResponseEntity<List<Review>> getAllReviews(@PathVariable("reviewedId") int reviewedId) {
-//        List<Review> userReviews = reviewService.getAllReviewsForUser(reviewedId);
-//        return ResponseEntity.ok(userReviews);
-//    }
 }

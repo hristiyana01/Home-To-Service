@@ -2,18 +2,22 @@ package app.services.implementations;
 
 import app.dtos.CategoryDto;
 import app.models.Category;
+import app.models.Post;
 import app.repositories.CategoryRepository;
+import app.repositories.PostRepository;
 import app.services.CategoryService;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final PostRepository postRepository;
 
     @Override
     public List<Category> getAll() {
@@ -42,4 +46,6 @@ public class CategoryServiceImpl implements CategoryService {
         var category = cat.get();
         return mapToCategoryDto(category);
     }
+
+
 }

@@ -13,7 +13,7 @@ public interface PostService {
 
     List<PostDto> getUserPosts(Integer userId);
 
-    List<Post> getUserFavoritePosts(Integer userId);
+    List<PostDto> getUserFavoritePosts(Integer userId);
 
     Post updatePost(Integer postId, UpdatePostDto updatePostDto) throws NotFoundException;
 

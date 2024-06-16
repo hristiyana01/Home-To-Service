@@ -67,6 +67,11 @@ export default function CreatePostPage() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    if (images.length === 0) {
+      toast.error("Please add images!");
+      return;
+    }
+
     if (data.categoryId === -1) {
       toast.error("Please select valid category!");
       return;

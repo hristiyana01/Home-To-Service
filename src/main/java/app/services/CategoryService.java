@@ -4,6 +4,7 @@ import app.dtos.CategoryDto;
 import app.models.Category;
 import javassist.NotFoundException;
 
+import javax.print.DocFlavor;
 import java.util.List;
 
 public interface CategoryService {
@@ -11,5 +12,4 @@ public interface CategoryService {
 
     void addCategory(Category category);
     CategoryDto getById(Integer categoryId) throws NotFoundException;
-
 }

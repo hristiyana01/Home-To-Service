@@ -15,20 +15,22 @@ export default function PostsPage() {
         const response = await axios.get("http://localhost:8080/api/posts/all");
 
         let posts = response.data;
+        if (userStore.userId) {
+          const favoritesForPostsResp = await axios.post(
+            "http://localhost:8080/api/favourites/check-favourite-posts-for-user",
+            {
+              userId: userStore.userId,
+              postsToCheck: response.data.map((post: any) => post.id),
+            }
+          );
 
-        const favoritesForPostsResp = await axios.post(
-          "http://localhost:8080/api/favourites/check-favourite-posts-for-user",
-          {
-            userId: userStore.userId,
-            postsToCheck: response.data.map((post: any) => post.id),
-          }
-        );
+          let favoritePostsMappings =
+            favoritesForPostsResp.data.favoritePostsMappings;
+          posts.map((post: any) => {
+            post.isFavorite = favoritePostsMappings[post.id];
+          });
+        }
 
-        let favoritePostsMappings =
-          favoritesForPostsResp.data.favoritePostsMappings;
-        posts.map((post: any) => {
-          post.isFavorite = favoritePostsMappings[post.id];
-        });
         setPosts(response.data);
       } catch (error) {
         toast.error("Our services might be down. Please try again later!");

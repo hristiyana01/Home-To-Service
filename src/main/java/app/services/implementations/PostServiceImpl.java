@@ -78,9 +78,32 @@ public class PostServiceImpl implements PostService {
         return postDto;
     }
 
-    @Override
-    public List<Post> getUserFavoritePosts(Integer userId) {
-        return List.of();
+
+    public List<PostDto> getUserFavoritePosts(Integer userId) {
+        var posts = postRepository.findFavoritePostsByUserId(userId);
+        List<PostDto> postdtos = new ArrayList<>();
+
+        for (int i = 0; i < posts.size(); i++) {
+            var postdto = mapToDto(posts.get(i));
+            List<String> imageFilePaths = imageRepository.findAllByPostId(postdto.getId())
+                    .stream()
+                    .map(Image::getFilePath)
+                    .collect(Collectors.toList());
+            postdto.setImage(imageFilePaths.getFirst());
+
+            postdtos.add((postdto));
+        }
+        return postdtos;
+    }
+
+    private PostDto mapToDto(Post post) {
+        return PostDto.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .location(post.getLocation())
+                .createdDate(post.getCreatedDate())
+                .price(post.getPrice())
+                .build();
     }
 
     @Override

@@ -1,108 +1,42 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import { useStore } from "../../stores/stores";
 
-        export default function HomePage() {
-        const { userStore } = useStore();
+const HomePage: React.FC = () => {
+  const { userStore } = useStore();
 
-        return (
-<div className="App">
-    <header className="App-header">
-    <section className="py-5">
-    <div className="container px-4 px-lg-5 mt-5">
-        <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div className="col mb-5">
-                <div className="card h-100">
-                    <img
-                            className="card-img-top"
-                            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                            alt="..."
-                    />
-                    <div className="card-body p-4">
-                        <div className="text-center">
-                            <h5 className="fw-bolder">Fancy Product</h5>
-                        </div>
-                    </div>
-                    <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div className="text-center">
-                            <a className="btn btn-outline-dark mt-auto" href="#">
-                                View options
-                            </a>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-md-6 offset-md-3 text-center">
+          <h1 className="display-4 mt-5">Welcome to Home To Service</h1>
+          <p className="lead mt-3">
+            Create and discover posts for different types of services in various
+            categories.
+          </p>
+          {!userStore.isLoggedIn && (
+            <div className="mt-5">
+              <Link to="/login" className="btn btn-primary mr-3">
+                Login
+              </Link>
+              <Link to="/register" className="btn btn-success">
+                Register
+              </Link>
             </div>
-            <div className="col mb-5">
-                <div className="card h-100">
-                    <div
-                            className="badge bg-dark text-white position-absolute"
-                            style={{ top: "0.5rem", right: "0.5rem" }}
-                    >
-                    Sale
-                </div>
-                <img
-                        className="card-img-top"
-                        src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                        alt="..."
-                />
-                <div className="card-body p-4">
-                    <div className="text-center">
-                        <h5 className="fw-bolder">Special Item</h5>
-                        <div className="d-flex justify-content-center small text-warning mb-2">
-                            <div className="bi-star-fill"></div>
-                            <div className="bi-star-fill"></div>
-                            <div className="bi-star-fill"></div>
-                            <div className="bi-star-fill"></div>
-                            <div className="bi-star-fill"></div>
-                        </div>
-                        <span className="text-muted text-decoration-line-through">
-                            $20.00
-                        </span>
-                        $18.00
-                    </div>
-                </div>
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div className="text-center">
-                        <a className="btn btn-outline-dark mt-auto" href="#">
-                            Add to cart
-                        </a>
-                    </div>
-                </div>
-            </div>
+          )}
+          <div className="mt-5">
+            <h2>Popular Categories</h2>
+            <ul className="list-group">
+              <li className="list-group-item">House Cleaning</li>
+              <li className="list-group-item">Lawn Care</li>
+              <li className="list-group-item">Plumbing</li>
+              <li className="list-group-item">Electrical</li>
+            </ul>
+          </div>
         </div>
-        <div className="col mb-5">
-            <div className="card h-100">
-                <div
-                        className="badge bg-dark text-white position-absolute"
-                        style={{ top: "0.5rem", right: "0.5rem" }}
-                >
-                Sale
-            </div>
-            <img
-                    className="card-img-top"
-                    src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                    alt="..."
-            />
-            <div className="card-body p-4">
-                <div className="text-center">
-                    <h5 className="fw-bolder">Sale Item</h5>
-                    <span className="text-muted text-decoration-line-through">
-                        $50.00
-                    </span>
-                    $25.00
-                </div>
-            </div>
-            <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                        Add to cart
-                    </a>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
-        </div>
-        </section>
-        </header>
-        </div>
-        );
-        }
+  );
+};
+
+export default HomePage;

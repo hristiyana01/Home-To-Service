@@ -50,9 +50,9 @@ public class PostsController {
         return ResponseEntity.ok(posts);
     }
 
-    @GetMapping("/user-favorites/{userId}")
-    public ResponseEntity<List<Post>> getUserFavoritePosts(@PathVariable Integer userId) {
-        List<Post> favoritePosts = postService.getUserFavoritePosts(userId);
+    @GetMapping("/favorites/{userId}")
+    public ResponseEntity<List<PostDto>> getUserFavoritePosts(@PathVariable Integer userId) {
+        List<PostDto> favoritePosts = postService.getUserFavoritePosts(userId);
         return ResponseEntity.ok(favoritePosts);
     }
 
