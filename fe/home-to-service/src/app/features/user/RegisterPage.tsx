@@ -36,6 +36,7 @@ export default function RegisterPage() {
     try {
       await axios.post("http://localhost:8080/api/users/register", input);
       toast.success("Registered successfully!");
+      navigation("/user/login");
     } catch (error) {
       toast.error("Register failed!");
     }

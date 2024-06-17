@@ -112,7 +112,7 @@ export default function DetailedPostView() {
   if (!post) return "Loading...";
 
   const handleEditButtonClick = () => {
-    navigate(`/edit-post/${postId}`);
+    navigate(`/posts/edit/${postId}`);
   };
 
   return (
@@ -151,7 +151,7 @@ export default function DetailedPostView() {
                 )}
               </div>
             </div>
-            {userStore.userId === post.userId && (
+            {userStore.userId === post.user.id && (
               <Button variant="warning" onClick={handleEditButtonClick}>
                 Edit
               </Button>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -13,7 +13,11 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
 
 export default function PostOverview({ post }: any) {
   const { userStore } = useStore();
-  const [isFavorite, setIsFavorite] = useState(post.isFavorite);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    setIsFavorite(post.isFavorite);
+  }, []);
 
   const handleFavouriteIconClick = async (e: any) => {
     e.stopPropagation(); // Prevent the event from propagating to the parent (Link)
@@ -63,9 +67,9 @@ export default function PostOverview({ post }: any) {
           </div>
         </Link>
         <div className="post-overview-rightside">
-          <div className="post-heart-container">
-            {userStore.userId ? (
-              isFavorite ? (
+          {userStore.isLoggedIn && (
+            <div className="post-heart-container">
+              {isFavorite || false ? (
                 <FontAwesomeIcon
                   onClick={handleFavouriteIconClick}
                   icon={solidHeart}
@@ -75,9 +79,9 @@ export default function PostOverview({ post }: any) {
                   onClick={handleFavouriteIconClick}
                   icon={faHeart}
                 />
-              )
-            ) : null}
-          </div>
+              )}
+            </div>
+          )}
           <p className="post-price">
             <FontAwesomeIcon icon={faCoins} /> {post.price} BGN
           </p>

@@ -14,7 +14,6 @@ import EditPostPage from "../features/posts/PostEditPage";
 import PostUserDetails from "../features/user/PostUserDetails";
 import PostsForCategory from "../features/posts/PostsForCategoryPage";
 import AboutPage from "../features/about/AboutPage";
-import FavoritesPage from "../features/user/FavoritesPage";
 
 export const routes: RouteObject[] = [
   {
@@ -65,10 +64,6 @@ export const routes: RouteObject[] = [
           {
             path: "register",
             element: <RegisterPage />,
-          },
-          {
-            path: "favorites",
-            element: <FavoritesPage />,
           },
         ],
       },
