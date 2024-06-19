@@ -14,6 +14,7 @@ import EditPostPage from "../features/posts/PostEditPage";
 import PostUserDetails from "../features/user/PostUserDetails";
 import PostsForCategory from "../features/posts/PostsForCategoryPage";
 import AboutPage from "../features/about/AboutPage";
+        import FavoritesPage from "../features/user/FavouritesPage";
 
 export const routes: RouteObject[] = [
   {
@@ -54,6 +55,7 @@ export const routes: RouteObject[] = [
         path: "/profile/:userId",
         element: <PostUserDetails />,
       },
+
       {
         path: "user",
         children: [
@@ -65,6 +67,10 @@ export const routes: RouteObject[] = [
             path: "register",
             element: <RegisterPage />,
           },
+        {
+        path: "favorites",
+        element: <FavoritesPage/>,
+        },
         ],
       },
       {

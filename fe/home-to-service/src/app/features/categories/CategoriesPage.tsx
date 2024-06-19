@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationPin } from "@fortawesome/free-solid-svg-icons";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<CategoryModel[]>([]);
@@ -35,14 +33,9 @@ export default function CategoriesPage() {
           >
             <Link
               to={`/posts/category/${category.id}`}
-              className="text-center mx-3 text-decoration-none"
+              className="text-center text-decoration-none btn btn-outline-primary"
             >
-              <FontAwesomeIcon
-                icon={faLocationPin}
-                className="text-warning mb-2"
-                size="2x"
-              />
-              <p className="fs-5 fw-bold text-dark">{category.name}</p>
+              <p className="fs-5 fw-bold mx-auto my-auto">{category.name}</p>
             </Link>
           </div>
         ))}

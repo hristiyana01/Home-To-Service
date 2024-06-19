@@ -141,23 +141,61 @@ export default function DetailedPostView() {
                 />
               )}
             </div>
-            <div className="d-flex flex-column">
-              <h2>{post?.title}</h2>
-              <div className="post-description">
-                <p>{post?.description}</p>
-                <p>{post?.location}</p>
-                {post?.formattedDate && post?.formattedTime && (
-                  <p>{`${post.formattedDate}, ${post.formattedTime}`}</p>
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              <Form
+                onSubmit={handleCommentSubmit}
+                className="mt-4 d-flex flex-column justify-content-center align-items-center"
+              >
+                <Form.Group controlId="comment">
+                  <Form.Label className="fs-4">Add a Comment</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your comment"
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                  />
+                </Form.Group>
+                <Button variant="primary" type="submit" className="mt-2">
+                  Submit
+                </Button>
+              </Form>
+
+              <div className="post-comments mt-5">
+                <h3>Comments</h3>
+                {comments.length > 0 ? (
+                  <div>
+                    {comments.map((comment) => (
+                      <p>
+                        <strong className="text-primary">
+                          {comment.username}
+                        </strong>
+                        : <span>{comment.commentText}</span>
+                      </p>
+                    ))}
+                  </div>
+                ) : (
+                  <p>No comments yet.</p>
                 )}
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-lg-4">
+          <div className="pb-0 d-flex flex-column align-items-center">
+            <h2 className="text-center">{post?.title}</h2>
+            <div className="post-description">
+              <p className="text-center">{post?.description}</p>
+            </div>
+
             {userStore.userId === post.user.id && (
               <Button variant="warning" onClick={handleEditButtonClick}>
                 Edit
               </Button>
             )}
-            <div className="mt-2">
-              <div>
+
+            <div className="mt-2 d-flex flex-row justify-content-center align-items-center my-auto">
+              <div className="mx-2 fs-5">
                 {isFavorite ? (
                   <FontAwesomeIcon
                     onClick={handleFavouriteIconClick}
@@ -175,43 +213,11 @@ export default function DetailedPostView() {
               </div>
             </div>
 
-            <div className="post-comments">
-              <h3>Comments</h3>
-              {comments.length > 0 ? (
-                <ul>
-                  {comments.map((comment, i) => (
-                    <li key={comment.username + i}>
-                      <p>
-                        <strong>{comment.username}</strong>:{" "}
-                        {comment.commentText}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No comments yet.</p>
-              )}
+            <p className="text-center">{post?.location}</p>
+            {post?.formattedDate && post?.formattedTime && (
+              <p className="text-center">{`${post.formattedDate}, ${post.formattedTime}`}</p>
+            )}
 
-              <Form onSubmit={handleCommentSubmit}>
-                <Form.Group controlId="comment">
-                  <Form.Label>Add a Comment</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your comment"
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                  />
-                </Form.Group>
-                <Button variant="primary" type="submit" className="mt-2">
-                  Submit
-                </Button>
-              </Form>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-12 col-lg-4">
-          <div className="pb-0">
             <div className="col-12 col-md-12 mt-3 text-center">
               <Link
                 to={`/profile/${creatorDetails.id}`}

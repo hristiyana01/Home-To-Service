@@ -72,8 +72,8 @@ public class FavouritesServiceImpl implements FavouriteService {
                 .postId(togglePostAsFavorite.getPostId())
                 .favoriteDate(Instant.now())
                 .build();
-        Favourites addedFavorite = favouritesRepository.save(favourite);
 
+       favouritesRepository.save(favourite);
         return true;
     }
 

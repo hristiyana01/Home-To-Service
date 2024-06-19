@@ -41,7 +41,6 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewDto> getUserReviews(Integer userId) {
         List<Review> reviews = reviewRepository.findByReviewedUserId(userId).get();
 
-        // Convert Review entities to ReviewDto
         return reviews.stream()
                 .map(review -> {
                     ReviewDto reviewDto = new ReviewDto();

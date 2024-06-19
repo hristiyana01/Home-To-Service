@@ -2,16 +2,12 @@ package app.services.implementations;
 
 import app.dtos.AuthenticationRequest;
 import app.dtos.AuthenticationResponse;
-import app.dtos.CreateReviewDto;
-import app.dtos.post.PostDto;
 import app.dtos.user.CreateUserDto;
-import app.dtos.user.DetailedUserDto;
 import app.dtos.user.DetailedUserResponseDto;
 import app.dtos.user.UserDto;
 import app.enums.Roles;
 import app.enums.Status;
 import app.models.Post;
-import app.models.Review;
 import app.models.User;
 import app.repositories.PostRepository;
 import app.repositories.ReviewRepository;
@@ -121,38 +117,12 @@ public class UserServiceImpl implements UserService {
         if (userOpt.isEmpty()) {
             throw new NotFoundException("User with id " + userId + " not found.");
         }
-        var user = userOpt.get();
 
-        //List<Review> reviews = reviewRepository.findAllByReviewedId(userId);
         List<Post> posts = postRepository.findAllByUserIdAndStatus(userId, Status.ACTIVE);
 
         DetailedUserResponseDto detailedUserResponseDto = new DetailedUserResponseDto();
-        var detailedUser = new DetailedUserDto();
-//        List<CreateReviewDto> reviewDtos = reviews.stream()
-//                .map(this::mapToCreateReviewDto)
-//                .collect(Collectors.toList());
-
-        //detailedUserResponseDto.setReviews(reviewDtos);
         detailedUserResponseDto.setPosts(posts);
 
         return detailedUserResponseDto;
-    }
-
-    private CreateReviewDto mapToCreateReviewDto(Review review) {
-        return CreateReviewDto.builder()
-                .reviewedUserId(review.getReviewedUserId())
-                .reviewerId(review.getReviewerId())
-                .rating(review.getRating())
-                .createdAt(review.getDate())
-                .build();
-    }
-
-    private PostDto mapToPostDto(Post post) {
-        return PostDto.builder()
-                .id(post.getId())
-                .title(post.getTitle())
-                .location(post.getLocation())
-                .createdDate(post.getCreatedDate())
-                .build();
     }
 }

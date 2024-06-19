@@ -18,15 +18,15 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        return ResponseEntity.ok(categoryService.getAll());
-    }
-
     @PostMapping
     public ResponseEntity<Void> addCategory(@RequestBody Category category) {
         categoryService.addCategory(category);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Category>> getAllCategories() {
+        return ResponseEntity.ok(categoryService.getAll());
     }
     @Operation(summary= "Gets category by ID")
     @GetMapping("/get/{categoryId}")

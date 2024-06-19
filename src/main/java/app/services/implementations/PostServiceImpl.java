@@ -4,7 +4,6 @@ import app.dtos.post.CreatePostDto;
 import app.dtos.post.PostDto;
 import app.dtos.post.UpdatePostDto;
 import app.enums.Status;
-import app.models.Category;
 import app.models.Image;
 import app.models.Post;
 import app.repositories.CategoryRepository;
@@ -115,7 +114,6 @@ public class PostServiceImpl implements PostService {
 
         Post post = postOptional.get();
 
-        // Update the post fields with the values from updatePostDto
         if (updatePostDto.getTitle() != null) {
             post.setTitle(updatePostDto.getTitle());
         }
@@ -138,7 +136,6 @@ public class PostServiceImpl implements PostService {
 
         post.setCategoryId(updatePostDto.getCategoryId());
 
-        // Save the updated post
         return postRepository.save(post);
     }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useStore } from "../../stores/stores";
 
@@ -88,87 +88,96 @@ export default function CreatePostPage() {
   };
 
   return (
-    <Container className="mt-3 text-center">
-      <h1>Create Post Page</h1>
-      <Form
-        onSubmit={handleSubmit}
-        className="d-flex justify-content-center flex-column"
-      >
-        <Form.Group controlId="formTitle">
-          <Form.Label>Title</Form.Label>
-          <Form.Control
-            type="text"
-            value={data.title}
-            onChange={(e) => setData({ ...data, title: e.target.value })}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            type="text"
-            value={data.description}
-            onChange={(e) => setData({ ...data, description: e.target.value })}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formPrice">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-            type="number"
-            value={data.price}
-            step="1"
-            min="0"
-            max="99999"
-            onChange={(e) =>
-              setData({ ...data, price: Number(e.target.value) })
-            }
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formLocation">
-          <Form.Label>Location</Form.Label>
-          <Form.Control
-            type="text"
-            value={data.location}
-            onChange={(e) => setData({ ...data, location: e.target.value })}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formCategoryId">
-          <Form.Label>Category</Form.Label>
-          <Form.Select
-            value={data.categoryId}
-            onChange={(e) =>
-              setData({ ...data, categoryId: Number(e.target.value) })
-            }
+    <Container className="mt-3">
+      <Row>
+        <Col md={6} className="mx-auto">
+          <h1 className="text-center">Create Post Page</h1>
+          <Form
+            onSubmit={handleSubmit}
+            className="d-flex justify-content-center flex-column"
           >
-            {categories.map((category: any) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
+            <Form.Group controlId="formTitle" className="mt-3">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                value={data.title}
+                onChange={(e) => setData({ ...data, title: e.target.value })}
+              />
+            </Form.Group>
 
-        <Form.Group controlId="formPhoneNumber">
-          <Form.Label>Phone Number</Form.Label>
-          <Form.Control
-            type="text"
-            value={data.phoneNumber}
-            onChange={(e) => setData({ ...data, phoneNumber: e.target.value })}
-          />
-        </Form.Group>
+            <Form.Group controlId="formDescription" className="mt-3">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                className="mx-auto"
+                type="text"
+                value={data.description}
+                onChange={(e) =>
+                  setData({ ...data, description: e.target.value })
+                }
+              />
+            </Form.Group>
 
-        <Form.Group controlId="formImages">
-          <Form.Label>Upload Images</Form.Label>
-          <Form.Control type="file" multiple onChange={handleFileChange} />
-        </Form.Group>
+            <Form.Group controlId="formPrice" className="mt-3">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type="number"
+                value={data.price}
+                step="1"
+                min="0"
+                max="99999"
+                onChange={(e) =>
+                  setData({ ...data, price: Number(e.target.value) })
+                }
+              />
+            </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Create
-        </Button>
-      </Form>
+            <Form.Group controlId="formLocation" className="mt-3">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                value={data.location}
+                onChange={(e) => setData({ ...data, location: e.target.value })}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formCategoryId" className="mt-3">
+              <Form.Label>Category</Form.Label>
+              <Form.Select
+                value={data.categoryId}
+                onChange={(e) =>
+                  setData({ ...data, categoryId: Number(e.target.value) })
+                }
+              >
+                {categories.map((category: any) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group controlId="formPhoneNumber" className="mt-3">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="text"
+                value={data.phoneNumber}
+                onChange={(e) =>
+                  setData({ ...data, phoneNumber: e.target.value })
+                }
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formImages" className="mt-3">
+              <Form.Label>Upload Images</Form.Label>
+              <Form.Control type="file" multiple onChange={handleFileChange} />
+            </Form.Group>
+
+            <Button variant="success" type="submit" className="mt-4">
+              Create
+            </Button>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   );
 }

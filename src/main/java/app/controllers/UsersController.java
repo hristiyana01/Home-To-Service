@@ -11,8 +11,6 @@ import app.repositories.ReviewRepository;
 import app.services.UserService;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +22,6 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 @AllArgsConstructor
 public class UsersController {
-    private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
     private final UserService userService;
     private final PostRepository postRepository;
     private final ReviewRepository reviewRepository;

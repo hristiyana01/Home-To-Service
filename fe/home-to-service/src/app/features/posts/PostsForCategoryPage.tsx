@@ -49,10 +49,13 @@ function PostsForCategory() {
 
   return (
     <div className="category-posts-main">
-      {category && <h1>All Posts for {category.name} Category</h1>}
-      {posts.map((post: any) => (
-        <PostOverview key={post.id} post={post} />
-      ))}
+      {category && <h1 className="text-center">{category.name} Posts</h1>}
+      {posts.length !== 0 &&
+        posts.map((post: any) => <PostOverview key={post.id} post={post} />)}
+
+      {posts.length === 0 && (
+        <h3 className="text-center mt-4">No posts yet!</h3>
+      )}
     </div>
   );
 }

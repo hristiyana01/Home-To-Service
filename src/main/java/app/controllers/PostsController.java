@@ -9,8 +9,6 @@ import app.services.ImageService;
 import app.services.PostService;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +19,6 @@ import java.util.List;
 @RequestMapping("/api/posts")
 @AllArgsConstructor
 public class PostsController {
-    private static final Logger logger = LoggerFactory.getLogger(PostsController.class);
     private final PostService postService;
     private final PostRepository postRepository;
     private final ImageService imageService;
