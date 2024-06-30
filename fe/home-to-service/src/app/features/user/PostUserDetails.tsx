@@ -57,7 +57,7 @@ export default function PostUserDetails() {
   if (!userDetails) return <div>Loading user details...</div>;
 
   return (
-    <div>
+    <div className="container my-3">
       <h1 className="text-center fw-bold">User Details</h1>
       <div className="text-center">
         <h2>{userDetails.name + ` ` + userDetails.surname}</h2>
@@ -80,7 +80,7 @@ export default function PostUserDetails() {
           /6
         </p>
 
-        <p>Post created by this user: {userDetails.userPosts}</p>
+        <h3>Post created by this user: {userDetails.userPosts}</h3>
       </div>
       <div>
         <h2>User Posts</h2>
@@ -118,26 +118,18 @@ export default function PostUserDetails() {
         </ul>
       </div>
 
-      <div>
-        <h2>User Reviews</h2>
-        {reviews.length > 0 ? (
-          <ul>
-            {reviews.map((review: any, i: number) => (
-              <li key={i}>{"⭐".repeat(review.rating)}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No reviews yet.</p>
-        )}
-
+      <div className="d-flex flex-column justify-content-center align-items-center">
         {Number(userStore.userId) !== Number(userId) && (
-          <Form onSubmit={handleReviewSubmit}>
+          <Form onSubmit={handleReviewSubmit} className="w-50">
             <Form.Group controlId="review">
-              <Form.Label>Add a Review</Form.Label>
+              <Form.Label className="w-100 text-center">
+                Add a Review
+              </Form.Label>
               <Form.Control
                 as="select"
                 value={newReview}
                 onChange={(e) => setNewReview(e.target.value)}
+                className="text-center"
               >
                 <option value="">Select your rating</option>
                 <option value="1">⭐</option>
@@ -148,10 +140,25 @@ export default function PostUserDetails() {
                 <option value="6">⭐⭐⭐⭐⭐⭐</option>
               </Form.Control>
             </Form.Group>
-            <Button variant="primary" type="submit" className="mt-2">
+            <Button variant="primary" type="submit" className="mt-2 w-100">
               Submit
             </Button>
           </Form>
+        )}
+      </div>
+      <div>
+        <h2>User Reviews</h2>
+        {reviews.length > 0 ? (
+          <div>
+            {reviews.map((review: any, i: number) => (
+              <p key={i}>
+                <strong className="text-primary">{review.username}</strong>:{" "}
+                <span>{"⭐".repeat(review.rating)}</span>
+              </p>
+            ))}
+          </div>
+        ) : (
+          <p>No reviews yet.</p>
         )}
       </div>
     </div>

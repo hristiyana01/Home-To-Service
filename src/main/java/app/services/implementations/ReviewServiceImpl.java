@@ -3,13 +3,16 @@ package app.services.implementations;
 import app.dtos.CreateReviewDto;
 import app.dtos.ReviewDto;
 import app.models.Review;
+import app.models.User;
 import app.repositories.ReviewRepository;
+import app.repositories.UserRepository;
 import app.services.ReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +21,7 @@ public class ReviewServiceImpl implements ReviewService {
     private static final int minRating = 0;
     private static final int maxRating = 5;
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Review createReview(CreateReviewDto reviewDto) {
@@ -40,11 +44,15 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<ReviewDto> getUserReviews(Integer userId) {
         List<Review> reviews = reviewRepository.findByReviewedUserId(userId).get();
+        List<User> reviewers = userRepository.findAllById(reviews.stream().map(review -> review.getReviewerId()).collect(Collectors.toList()));
 
         return reviews.stream()
                 .map(review -> {
+                   User reviewer = reviewers.stream().filter(user -> Objects.equals(user.getId(), review.getReviewerId())).findFirst().orElseThrow();
                     ReviewDto reviewDto = new ReviewDto();
                     reviewDto.setRating(review.getRating());
+                    reviewDto.setUsername(reviewer.getUsername());
+                    reviewDto.setReviewerId(reviewer.getId());
                     return reviewDto;
                 })
                 .collect(Collectors.toList());

@@ -164,8 +164,8 @@ export default function DetailedPostView() {
                 <h3>Comments</h3>
                 {comments.length > 0 ? (
                   <div>
-                    {comments.map((comment) => (
-                      <p>
+                    {comments.map((comment, i) => (
+                      <p key={i}>
                         <strong className="text-primary">
                           {comment.username}
                         </strong>
@@ -187,13 +187,11 @@ export default function DetailedPostView() {
             <div className="post-description">
               <p className="text-center">{post?.description}</p>
             </div>
-
             {userStore.userId === post.user.id && (
               <Button variant="warning" onClick={handleEditButtonClick}>
                 Edit
               </Button>
             )}
-
             <div className="mt-2 d-flex flex-row justify-content-center align-items-center my-auto">
               <div className="mx-2 fs-5">
                 {isFavorite ? (
@@ -212,12 +210,13 @@ export default function DetailedPostView() {
                 <p className="fw-bold">{post.price} BGN</p>
               </div>
             </div>
-
             <p className="text-center">{post?.location}</p>
             {post?.formattedDate && post?.formattedTime && (
               <p className="text-center">{`${post.formattedDate}, ${post.formattedTime}`}</p>
             )}
-
+            <p className="text-primary font-weight-bold font-italic bg-light p-2 border border-dark rounded">
+              Status: {post.status}
+            </p>{" "}
             <div className="col-12 col-md-12 mt-3 text-center">
               <Link
                 to={`/profile/${creatorDetails.id}`}
@@ -228,10 +227,12 @@ export default function DetailedPostView() {
                 </span>
               </Link>
             </div>
-
             <div className="col-12 col-md-12 mt-3 mb-3 text-center profileinfo pb-3">
-              <p>Телефонен номер: {creatorDetails.phone_number}</p>
-              <p>Локация: {post.location + `, ` + creatorDetails.country}</p>
+              <p>Phone number: {creatorDetails.phone_number}</p>
+              <p>
+                Location: {creatorDetails.city + ", " + creatorDetails.country}
+              </p>
+
               <p>
                 Rating:{" "}
                 {reviews.length > 0

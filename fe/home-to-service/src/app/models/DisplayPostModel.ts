@@ -10,4 +10,5 @@ interface DisplayPostModel {
   createdDate: Date;
   image: string;
   user: any;
+  status: any;
 }

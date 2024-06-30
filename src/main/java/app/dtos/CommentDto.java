@@ -14,12 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 public class CommentDto {
 
-    @Column(name = "post_id")
     private Integer postId;
-
-    @Column(name = "comment_text")
     private String commentText;
-
-    @Column(name = "username")
     private String username;
 }

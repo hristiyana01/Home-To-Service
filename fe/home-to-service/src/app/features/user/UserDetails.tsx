@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export default function UserDetailsPage() {
   const { userStore } = useStore();
   const [userDetails, setUserDetails] = useState<any>({});
+  const [reviews, setReviews] = useState<any>([]);
   const [userPosts, setUserPosts] = useState<any>([]);
 
   useEffect(() => {
@@ -14,8 +15,12 @@ export default function UserDetailsPage() {
         const response = await axios.get(
           `http://localhost:8080/api/posts/user/${Number(userStore.userId)}`
         );
+        const reviewsResponse = await axios.get(
+          `http://localhost:8080/api/reviews/${Number(userStore.userId)}`
+        );
 
         setUserPosts(response.data);
+        setReviews(reviewsResponse.data);
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
@@ -28,7 +33,7 @@ export default function UserDetailsPage() {
   if (!userDetails) return <div>Loading user details...</div>;
 
   return (
-    <div>
+    <div className="container my-3">
       <h1 className="text-center fw-bold">User Details</h1>
       <div className="text-center">
         <h2>{userDetails.name + ` ` + userDetails.surname}</h2>
@@ -37,8 +42,7 @@ export default function UserDetailsPage() {
         <p>Phone: {userDetails.phone_number}</p>
         <p>Country: {userDetails.country}</p>
         <p>City: {userDetails.city}</p>
-        {/* <p>Reviews: {userDetails.review}</p>*/}
-        <p>Post created by this user: {userDetails.userPosts}</p>
+        <h3>Post created by this user: {userDetails.userPosts}</h3>
       </div>
       <div>
         <h2>User Posts</h2>
@@ -83,14 +87,20 @@ export default function UserDetailsPage() {
 
         {userPosts.length === 0 && <p>User has no posts</p>}
       </div>
-      {/* <div>
-        <h2>User Reviews</h2>
-        <ul>
-          {userDetails.reviews.map((review: any) => (
-            <li key={review.id}>{review.content}</li>
-          ))}
-        </ul>
-      </div> */}
+      {
+        <div>
+          <h2>User Reviews</h2>
+          {reviews.length > 0 ? (
+            <ul>
+              {reviews.map((review: any, i: number) => (
+                <li key={i}>{"⭐".repeat(review.rating)}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No reviews yet.</p>
+          )}
+        </div>
+      }
     </div>
   );
 }
