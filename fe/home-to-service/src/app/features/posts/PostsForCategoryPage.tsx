@@ -45,7 +45,6 @@ function PostsForCategory() {
 
     fetchPosts();
   }, [categoryId]);
-  // todo: fetch the category name and display it in the heading instead of categoryId
 
   return (
     <div className="category-posts-main">
