@@ -91,11 +91,14 @@ export default function UserDetailsPage() {
         <div>
           <h2>User Reviews</h2>
           {reviews.length > 0 ? (
-            <ul>
+            <div>
               {reviews.map((review: any, i: number) => (
-                <li key={i}>{"⭐".repeat(review.rating)}</li>
+                <p key={i}>
+                  <strong className="text-primary">{review.username}</strong>:{" "}
+                  <span>{"⭐".repeat(review.rating)}</span>
+                </p>
               ))}
-            </ul>
+            </div>
           ) : (
             <p>No reviews yet.</p>
           )}

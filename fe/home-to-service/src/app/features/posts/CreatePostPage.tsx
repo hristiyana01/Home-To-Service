@@ -22,6 +22,15 @@ export default function CreatePostPage() {
     categoryId: -1,
   });
 
+  // Error states
+  const [errors, setErrors] = useState({
+    title: "",
+    description: "",
+    location: "",
+    images: "",
+    categoryId: "",
+  });
+
   useEffect(() => {
     if (!userStore.isLoggedIn) navigation("/not-found");
   }, []);
@@ -67,8 +76,48 @@ export default function CreatePostPage() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    // Reset errors
+    setErrors({
+      title: "",
+      description: "",
+      location: "",
+      images: "",
+      categoryId: "",
+    });
+
+    // Validate inputs
+    let formIsValid = true;
+    let newErrors = {
+      title: "",
+      description: "",
+      location: "",
+      images: "",
+      categoryId: "",
+    };
+
+    if (!data.title) {
+      newErrors.title = "Title is required";
+      formIsValid = false;
+    }
+    if (!data.description) {
+      newErrors.description = "Description is required";
+      formIsValid = false;
+    }
+    if (!data.location) {
+      newErrors.location = "Location is required";
+      formIsValid = false;
+    }
     if (data.categoryId === -1) {
-      toast.error("Please select valid category!");
+      newErrors.categoryId = "Please select a valid category";
+      formIsValid = false;
+    }
+    if (images.length === 0) {
+      newErrors.images = "At least one image is required";
+      formIsValid = false;
+    }
+
+    if (!formIsValid) {
+      setErrors(newErrors);
       return;
     }
 
@@ -102,7 +151,11 @@ export default function CreatePostPage() {
                 type="text"
                 value={data.title}
                 onChange={(e) => setData({ ...data, title: e.target.value })}
+                isInvalid={!!errors.title}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.title}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="formDescription" className="mt-3">
@@ -114,7 +167,11 @@ export default function CreatePostPage() {
                 onChange={(e) =>
                   setData({ ...data, description: e.target.value })
                 }
+                isInvalid={!!errors.description}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.description}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="formPrice" className="mt-3">
@@ -137,7 +194,11 @@ export default function CreatePostPage() {
                 type="text"
                 value={data.location}
                 onChange={(e) => setData({ ...data, location: e.target.value })}
+                isInvalid={!!errors.location}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.location}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="formCategoryId" className="mt-3">
@@ -147,6 +208,7 @@ export default function CreatePostPage() {
                 onChange={(e) =>
                   setData({ ...data, categoryId: Number(e.target.value) })
                 }
+                isInvalid={!!errors.categoryId}
               >
                 {categories.map((category: any) => (
                   <option key={category.id} value={category.id}>
@@ -154,6 +216,9 @@ export default function CreatePostPage() {
                   </option>
                 ))}
               </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {errors.categoryId}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="formPhoneNumber" className="mt-3">
@@ -169,7 +234,15 @@ export default function CreatePostPage() {
 
             <Form.Group controlId="formImages" className="mt-3">
               <Form.Label>Upload Images</Form.Label>
-              <Form.Control type="file" multiple onChange={handleFileChange} />
+              <Form.Control
+                type="file"
+                multiple
+                onChange={handleFileChange}
+                isInvalid={!!errors.images}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.images}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Button variant="success" type="submit" className="mt-4">
